@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MELNLLL // VFX, CGI & Video Editing</title>
+    <!-- Tailwind CSS for layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Space Grotesk, Syne for modern layout and high-end artistic logo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #f3f4f6;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* Y2K Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .y2k-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 4px 30px rgba(0, 0, 0, 0.03),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .y2k-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Modern Chrome Design Buttons (Milled Aluminum Sheet Style - No Borders, Soft Shadows) */
+        .modern-chrome-btn {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 241, 243, 0.75) 50%, rgba(220, 224, 230, 0.6) 100%);
+            border: none;
+            box-shadow: 
+                0 10px 30px -5px rgba(0, 0, 0, 0.04), 
+                0 4px 12px -2px rgba(0, 0, 0, 0.02),
+                inset 0 1.5px 0px rgba(255, 255, 255, 0.9);
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .modern-chrome-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: none;
+        }
+
+        .modern-chrome-btn:hover::before {
+            transform: translateX(100%);
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .modern-chrome-btn:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 60%, #e5e7eb 100%);
+            box-shadow: 
+                0 20px 40px -8px rgba(0, 0, 0, 0.08),
+                0 8px 16px -4px rgba(0, 0, 0, 0.04),
+                inset 0 1.5px 0px rgba(255, 255, 255, 1);
+        }
+
+        /* Chromed Syne Logo Font (Artistic & Bold) */
+        .logo-font {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            background: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #e2e8f0 30%,
+                #475569 48%,
+                #0f172a 50%,
+                #94a3b8 52%,
+                #f8fafc 80%,
+                #1e293b 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #revealed-name {
+            font-size: clamp(1.75rem, 8vw, 6.5rem);
+            letter-spacing: 0.15em;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Pulse for online status */
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10B981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen flex flex-col justify-between py-8 px-0">
+
+    <!-- Preloader (Flickering Square Intro) -->
+    <div id="preloader" class="fixed inset-0 bg-white z-[9999] flex items-center justify-center transition-all duration-700 ease-out">
+        <div class="relative">
+            <div id="intro-box" class="w-[10px] h-[10px] bg-black transition-transform duration-500 overflow-hidden shadow-sm"></div>
+        </div>
+    </div>
+
+    <!-- Cinematic Splash Name Reveal (Triggers after preloader) -->
+    <div id="name-reveal" class="fixed inset-0 z-[9998] flex items-center justify-center bg-transparent pointer-events-none transition-opacity duration-1000 ease-in-out opacity-0">
+        <h1 id="revealed-name" class="font-extrabold logo-font uppercase text-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.06)] transform scale-90 blur-md">
+            MELNLLL
+        </h1>
+    </div>
+
+    <!-- Main Content Wrapper (Smoothly fades in after title intro) -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-out flex-grow flex flex-col justify-between">
+        
+        <!-- Top Navigation Area (Edge-to-Edge with safe padding) -->
+        <header class="w-full px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-row justify-between items-start gap-2 mb-12">
+            <!-- Left Aligned Info -->
+            <div class="flex flex-col items-start gap-1">
+                <a href="#portfolio" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-gray-500 uppercase hover:text-gray-950 transition-colors">
+                    // ART PORTFOLIO
+                </a>
+                <a href="#contact" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-gray-500 uppercase hover:text-gray-950 transition-colors mt-1">
+                    // CONTACT
+                </a>
+            </div>
+            <!-- Right Aligned Info -->
+            <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/60 border border-white/80 text-[10px] sm:text-xs font-medium text-gray-700 shadow-sm whitespace-nowrap self-start">
+                <span class="pulse-dot"></span>
+                <span>AVAILABLE FOR WORK 2026</span>
+            </div>
+        </header>
+
+        <!-- Main Workspace Container -->
+        <main class="max-w-5xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
+            
+            <!-- Hero / Description Block -->
+            <section class="text-center mb-16 relative py-12 flex flex-col items-center justify-center select-none">
+                <div class="flex flex-col items-center">
+                    <p class="text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-gray-600 font-extrabold uppercase mb-6 text-center">
+                        Visual Effects &bull; 3D CGI &bull; Editor
+                    </p>
+                    
+                    <!-- Tags / Services List -->
+                    <div class="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto px-4">
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[COMPOSITING]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[3D ART]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[CAMERA TRACKING]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[ROTO & CLEANUP]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[VIDEO EDITING]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Portfolio Section -->
+            <section id="portfolio" class="mb-20 scroll-mt-24">
+                <h2 class="text-xs tracking-[0.3em] font-bold text-gray-400 uppercase text-center mb-8">// SELECTED WORK SHOWCASE</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Video 1 -->
+                    <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/50 shadow-inner relative">
+                                <iframe 
+                                    src="https://player.vimeo.com/video/1122784946?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;playsinline=1" 
+                                    frameborder="0" 
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                                    class="absolute top-0 left-0 w-full h-full" 
+                                    title="Showreel / Project 01"
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <h3 class="text-lg font-bold mt-4 tracking-tight">3D & CGI Reel</h3>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/50 shadow-inner relative">
+                                <iframe 
+                                    src="https://player.vimeo.com/video/1162159477?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;playsinline=1" 
+                                    frameborder="0" 
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                                    class="absolute top-0 left-0 w-full h-full" 
+                                    title="Showreel / Project 02"
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <h3 class="text-lg font-bold mt-4 tracking-tight">Compositing Reel</h3>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact / Action Section -->
+            <section id="contact" class="max-w-3xl mx-auto w-full text-center mb-12 scroll-mt-24">
+                <h2 class="text-xs tracking-[0.3em] font-bold text-gray-400 uppercase mb-8">// CONNECT / START PROJECT</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4">
+                    <!-- Telegram Chrome Card (No border, Soft Shadow) -->
+                    <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
+                        <div class="flex flex-col items-start text-left">
+                            <span class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">// TELEGRAM</span>
+                            <span class="text-sm font-bold tracking-tight text-gray-800 mt-0.5">@ddsblf</span>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-center group-hover:bg-white transition-all duration-300 flex-shrink-0">
+                            <svg class="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Email Chrome Card (No border, Soft Shadow) -->
+                    <a href="mailto:langi.staff1@gmail.com" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
+                        <div class="flex flex-col items-start text-left min-w-0">
+                            <span class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">// E-MAIL</span>
+                            <span class="text-sm font-bold tracking-tight text-gray-800 mt-0.5 truncate max-w-full">langi.staff1@gmail.com</span>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-center group-hover:bg-white transition-all duration-300 flex-shrink-0">
+                            <svg class="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer (Edge-to-Edge with safe padding) -->
+        <footer class="w-full border-t border-gray-200/60 pt-6 mt-12 px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <span class="text-[10px] sm:text-xs font-mono text-gray-400">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</span>
+            <span class="text-[10px] sm:text-xs font-mono text-gray-400">DESIGNED IN FUTURISTIC CHROME</span>
+        </footer>
+
+    </div>
+
+    <!-- Script: Cinematic Loader, Majestic Splash Reveal, and Page Fade-in -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const introBox = document.getElementById("intro-box");
+            const preloader = document.getElementById("preloader");
+            const nameReveal = document.getElementById("name-reveal");
+            const revealedName = document.getElementById("revealed-name");
+            const mainContent = document.getElementById("main-content");
+            
+            // Rapid high-contrast noise frames inside the loader box
+            const frames = [
+                '#000000',
+                '#ffffff',
+                'repeating-linear-gradient(45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
+                '#000000',
+                'repeating-linear-gradient(-45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
+                '#ffffff',
+                'radial-gradient(circle, #000 20%, #fff 60%)',
+                '#000000',
+                'conic-gradient(#000, #fff, #000)',
+                '#ffffff',
+                'repeating-radial-gradient(circle, #000 0px, #000 1px, #fff 1px, #fff 2px)'
+            ];
+            
+            let frameIndex = 0;
+            const interval = setInterval(() => {
+                if (introBox) {
+                    introBox.style.background = frames[frameIndex % frames.length];
+                    frameIndex++;
+                }
+            }, 50);
+
+            // Phase 1: Preloader finishes (1.5 seconds)
+            setTimeout(() => {
+                clearInterval(interval);
+                if (introBox) {
+                    introBox.style.transform = 'scale(250)';
+                    introBox.style.opacity = '0';
+                    introBox.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.5s ease';
+                }
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.pointerEvents = 'none';
+                    preloader.style.transition = 'opacity 0.6s ease-out';
+                }
+                
+                // Phase 2: Beautiful Large Chrome Logo Fade-In (0.2s after preloader starts to fade)
+                setTimeout(() => {
+                    if (nameReveal && revealedName) {
+                        nameReveal.classList.remove('opacity-0');
+                        nameReveal.classList.add('opacity-100');
+                        revealedName.style.transform = 'scale(1)';
+                        revealedName.style.filter = 'blur(0px)';
+                    }
+                }, 200);
+
+                // Phase 3: Logo fades out entirely & main portfolio fades in (1.7s of display time)
+                setTimeout(() => {
+                    if (nameReveal && revealedName) {
+                        nameReveal.style.opacity = '0';
+                        nameReveal.style.transition = 'opacity 0.8s ease-out';
+                        revealedName.style.transform = 'scale(1.04)';
+                        revealedName.style.filter = 'blur(6px)';
+                    }
+                    
+                    // Main workspace softly fades in
+                    if (mainContent) {
+                        mainContent.classList.remove('opacity-0');
+                        mainContent.classList.add('opacity-100');
+                    }
+                }, 1700);
+
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
