@@ -18,47 +18,76 @@
 
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background-color: #f3f4f6;
-            color: #1a1a1a;
+            background-color: #050505;
+            color: #f4f4f5;
             overflow-x: hidden;
         }
 
-        /* Y2K Grid Background */
+        /* 10mm Lens Inverted Optics Distortion Background Grid (Barely visible, softly blurred, ultra-thin) */
         .grid-bg {
-            background-image: 
-                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            position: fixed;
+            inset: 0;
+            opacity: 0.08; /* Extremely faint for maximum subtlety */
+            filter: blur(0.7px); /* Soft analog lens projection look */
+            -webkit-filter: blur(0.7px);
+            pointer-events: none;
+            z-index: -1;
+            will-change: transform, opacity, filter;
+            transform: translateZ(0); /* Hardware Acceleration on Mobile */
         }
 
-        /* Glassmorphism Cards */
+        /* Radial lens focus blur to smoothly blur out only the edges of the screen */
+        .lens-blur {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            /* Radial mask: transparent in the center (sharp), solid black on the edges (blurry) */
+            mask-image: radial-gradient(circle, transparent 45%, black 100%);
+            -webkit-mask-image: radial-gradient(circle, transparent 45%, black 100%);
+            will-change: transform;
+            transform: translateZ(0); /* Force Hardware Acceleration on Mobile */
+        }
+
+        /* Vignette overlay mimicking wide-angle lens light falloff */
+        .lens-vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, transparent 35%, rgba(5, 5, 5, 0.8) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Dark Glassmorphism Cards */
         .y2k-card {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 
-                0 4px 30px rgba(0, 0, 0, 0.03),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+                0 4px 30px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0px rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .y2k-card:hover {
             transform: translateY(-2px);
-            border-color: rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* Modern Chrome Design Buttons (Milled Aluminum Sheet Style - No Borders, Soft Shadows) */
+        /* Dark Milled Aluminum Design Buttons (Soft Shadows & Fine Silver Highlights) */
         .modern-chrome-btn {
             position: relative;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 241, 243, 0.75) 50%, rgba(220, 224, 230, 0.6) 100%);
-            border: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 
-                0 10px 30px -5px rgba(0, 0, 0, 0.04), 
-                0 4px 12px -2px rgba(0, 0, 0, 0.02),
-                inset 0 1.5px 0px rgba(255, 255, 255, 0.9);
+                0 10px 30px -5px rgba(0, 0, 0, 0.3), 
+                0 4px 12px -2px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0px rgba(255, 255, 255, 0.05);
             transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
@@ -67,7 +96,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             transform: translateX(-100%);
             transition: none;
         }
@@ -79,35 +108,17 @@
 
         .modern-chrome-btn:hover {
             transform: translateY(-3px);
-            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 60%, #e5e7eb 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.25);
             box-shadow: 
-                0 20px 40px -8px rgba(0, 0, 0, 0.08),
-                0 8px 16px -4px rgba(0, 0, 0, 0.04),
-                inset 0 1.5px 0px rgba(255, 255, 255, 1);
+                0 20px 40px -8px rgba(0, 0, 0, 0.5),
+                0 8px 16px -4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0px rgba(255, 255, 255, 0.1);
         }
 
-        /* Chromed Syne Logo Font (Artistic & Bold) */
-        .logo-font {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            background: linear-gradient(
-                180deg,
-                #ffffff 0%,
-                #e2e8f0 30%,
-                #475569 48%,
-                #0f172a 50%,
-                #94a3b8 52%,
-                #f8fafc 80%,
-                #1e293b 100%
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #revealed-name {
-            font-size: clamp(1.75rem, 8vw, 6.5rem);
-            letter-spacing: 0.15em;
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Mobile optimization performance triggers */
+        #preloader, #loading-text {
+            will-change: opacity;
         }
 
         /* Pulse for online status */
@@ -127,36 +138,121 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* Custom scrollbar */
+        /* Custom dark scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #0d0d0d;
         }
         ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
+            background: #333333;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
+            background: #555555;
         }
     </style>
 </head>
-<body class="grid-bg min-h-screen flex flex-col justify-between py-8 px-0">
+<body class="min-h-screen flex flex-col justify-between py-8 px-0">
 
-    <!-- Preloader (Flickering Square Intro) -->
-    <div id="preloader" class="fixed inset-0 bg-white z-[9999] flex items-center justify-center transition-all duration-700 ease-out">
-        <div class="relative">
-            <div id="intro-box" class="w-[10px] h-[10px] bg-black transition-transform duration-500 overflow-hidden shadow-sm"></div>
-        </div>
+    <!-- 10mm Lens Vector Optics Grid (Symmetric Pinched Grid - Spacing 30, Offset Center, Ultra-thin stroke) -->
+    <div class="grid-bg">
+        <svg class="w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="0.5">
+            <!-- Symmetrical Vertical Grid Lines (Offset, Spacing 30) -->
+            <!-- Left Side -->
+            <path d="M 5 0 Q 144 500 5 1000" />
+            <path d="M 35 0 Q 165 500 35 1000" />
+            <path d="M 65 0 Q 187 500 65 1000" />
+            <path d="M 95 0 Q 208 500 95 1000" />
+            <path d="M 125 0 Q 230 500 125 1000" />
+            <path d="M 155 0 Q 252 500 155 1000" />
+            <path d="M 185 0 Q 273 500 185 1000" />
+            <path d="M 215 0 Q 295 500 215 1000" />
+            <path d="M 245 0 Q 316 500 245 1000" />
+            <path d="M 275 0 Q 338 500 275 1000" />
+            <path d="M 305 0 Q 360 500 305 1000" />
+            <path d="M 335 0 Q 381 500 335 1000" />
+            <path d="M 365 0 Q 403 500 365 1000" />
+            <path d="M 395 0 Q 424 500 395 1000" />
+            <path d="M 425 0 Q 446 500 425 1000" />
+            <path d="M 455 0 Q 468 500 455 1000" />
+            <path d="M 485 0 Q 489 500 485 1000" />
+            
+            <!-- Right Side -->
+            <path d="M 515 0 Q 511 500 515 1000" />
+            <path d="M 545 0 Q 532 500 545 1000" />
+            <path d="M 575 0 Q 554 500 575 1000" />
+            <path d="M 605 0 Q 576 500 605 1000" />
+            <path d="M 635 0 Q 597 500 635 1000" />
+            <path d="M 665 0 Q 619 500 665 1000" />
+            <path d="M 695 0 Q 640 500 695 1000" />
+            <path d="M 725 0 Q 662 500 725 1000" />
+            <path d="M 755 0 Q 684 500 755 1000" />
+            <path d="M 785 0 Q 705 500 785 1000" />
+            <path d="M 815 0 Q 727 500 815 1000" />
+            <path d="M 845 0 Q 748 500 845 1000" />
+            <path d="M 875 0 Q 770 500 875 1000" />
+            <path d="M 905 0 Q 792 500 905 1000" />
+            <path d="M 935 0 Q 813 500 935 1000" />
+            <path d="M 965 0 Q 835 500 965 1000" />
+            <path d="M 995 0 Q 856 500 995 1000" />
+            
+            <!-- Symmetrical Horizontal Grid Lines (Offset, Spacing 30) -->
+            <!-- Top Side -->
+            <path d="M 0 5 Q 500 144 1000 5" />
+            <path d="M 0 35 Q 500 165 1000 35" />
+            <path d="M 0 65 Q 500 187 1000 65" />
+            <path d="M 0 95 Q 500 208 1000 95" />
+            <path d="M 0 125 Q 500 230 1000 125" />
+            <path d="M 0 155 Q 500 252 1000 155" />
+            <path d="M 0 185 Q 500 273 1000 185" />
+            <path d="M 0 215 Q 500 295 1000 215" />
+            <path d="M 0 245 Q 500 316 1000 245" />
+            <path d="M 0 275 Q 500 338 1000 275" />
+            <path d="M 0 305 Q 500 360 1000 305" />
+            <path d="M 0 335 Q 500 381 1000 335" />
+            <path d="M 0 365 Q 500 403 1000 365" />
+            <path d="M 0 395 Q 500 424 1000 395" />
+            <path d="M 0 425 Q 500 446 1000 425" />
+            <path d="M 0 455 Q 500 468 1000 455" />
+            <path d="M 0 485 Q 500 489 1000 485" />
+            
+            <!-- Bottom Side -->
+            <path d="M 0 515 Q 500 511 1000 515" />
+            <path d="M 0 545 Q 500 532 1000 545" />
+            <path d="M 0 575 Q 500 554 1000 575" />
+            <path d="M 0 605 Q 500 576 1000 605" />
+            <path d="M 0 635 Q 500 597 1000 635" />
+            <path d="M 0 665 Q 500 619 1000 665" />
+            <path d="M 0 695 Q 500 640 1000 695" />
+            <path d="M 0 725 Q 500 662 1000 725" />
+            <path d="M 0 755 Q 500 684 1000 755" />
+            <path d="M 0 785 Q 500 705 1000 785" />
+            <path d="M 0 815 Q 500 727 1000 815" />
+            <path d="M 0 845 Q 500 748 1000 845" />
+            <path d="M 0 875 Q 500 770 1000 875" />
+            <path d="M 0 905 Q 500 792 1000 905" />
+            <path d="M 0 935 Q 500 813 1000 935" />
+            <path d="M 0 965 Q 500 835 1000 965" />
+            <path d="M 0 995 Q 500 856 1000 995" />
+        </svg>
     </div>
 
-    <!-- Cinematic Splash Name Reveal (Triggers after preloader) -->
-    <div id="name-reveal" class="fixed inset-0 z-[9998] flex items-center justify-center bg-transparent pointer-events-none transition-opacity duration-1000 ease-in-out opacity-0">
-        <h1 id="revealed-name" class="font-extrabold logo-font uppercase text-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.06)] transform scale-90 blur-md">
-            MELNLLL
-        </h1>
+    <!-- Radial Lens Blur Overlay (Smooth focusing at edges) -->
+    <div class="lens-blur"></div>
+
+    <!-- Authentic Lens Vignette Shadow Overlay -->
+    <div class="lens-vignette"></div>
+
+    <!-- Preloader (Dark Flickering Square Intro -> Tech 100% Blink) -->
+    <div id="preloader" class="fixed inset-0 bg-[#050505] z-[9999] flex items-center justify-center transition-all duration-500 ease-out select-none">
+        <div class="relative flex flex-col items-center justify-center">
+            <!-- Glitch Square -->
+            <div id="intro-box" class="w-[12px] h-[12px] bg-black transition-transform duration-300 overflow-hidden shadow-sm"></div>
+            <!-- High-tech 100% Text Overlay -->
+            <div id="loading-text" class="absolute font-mono text-xs sm:text-sm tracking-[0.25em] text-white opacity-0 transition-opacity duration-75 uppercase">// 100%</div>
+        </div>
     </div>
 
     <!-- Main Content Wrapper (Smoothly fades in after title intro) -->
@@ -166,79 +262,108 @@
         <header class="w-full px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-row justify-between items-start gap-2 mb-12">
             <!-- Left Aligned Info -->
             <div class="flex flex-col items-start gap-1">
-                <a href="#portfolio" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-gray-500 uppercase hover:text-gray-950 transition-colors">
+                <a href="#portfolio" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors">
                     // ART PORTFOLIO
                 </a>
-                <a href="#contact" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-gray-500 uppercase hover:text-gray-950 transition-colors mt-1">
+                <a href="#contact" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors mt-1">
                     // CONTACT
                 </a>
             </div>
             <!-- Right Aligned Info -->
-            <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/60 border border-white/80 text-[10px] sm:text-xs font-medium text-gray-700 shadow-sm whitespace-nowrap self-start">
+            <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm whitespace-nowrap self-start">
                 <span class="pulse-dot"></span>
                 <span>AVAILABLE FOR WORK 2026</span>
             </div>
         </header>
 
-        <!-- Main Workspace Container -->
-        <main class="max-w-5xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
+        <!-- Main Workspace Container (Expanded to max-w-7xl for maximum desktop presence) -->
+        <main class="max-w-7xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
             
             <!-- Hero / Description Block -->
             <section class="text-center mb-16 relative py-12 flex flex-col items-center justify-center select-none">
                 <div class="flex flex-col items-center">
-                    <p class="text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-gray-600 font-extrabold uppercase mb-6 text-center">
+                    <p class="text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-zinc-400 font-extrabold uppercase mb-6 text-center">
                         Visual Effects &bull; 3D CGI &bull; Editor
                     </p>
                     
                     <!-- Tags / Services List -->
                     <div class="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto px-4">
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[COMPOSITING]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[3D ART]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[CAMERA TRACKING]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[ROTO & CLEANUP]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-gray-300/80 rounded-full text-gray-500 bg-white/50 backdrop-blur-sm font-mono">[VIDEO EDITING]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[COMPOSITING]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[3D ART]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[CAMERA TRACKING]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[ROTO & CLEANUP]</span>
+                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[VIDEO EDITING]</span>
                     </div>
                 </div>
             </section>
 
             <!-- Video Portfolio Section -->
             <section id="portfolio" class="mb-20 scroll-mt-24">
-                <h2 class="text-xs tracking-[0.3em] font-bold text-gray-400 uppercase text-center mb-8">// SELECTED WORK SHOWCASE</h2>
+                <h2 class="text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase text-center mb-8">// SELECTED WORK SHOWCASE</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Video 1 -->
+                <!-- Expanded gaps: gap-8 on mobile, gap-12 on tablet, gap-20 on desktop -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 xl:gap-20">
+                    <!-- Video 1 (Compositing Reel) -->
                     <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
                         <div>
-                            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/50 shadow-inner relative">
+                            <!-- Clickable Card Wrapper with Dynamic Silent Video Loop Preview -->
+                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-inner relative group cursor-pointer" 
+                                 data-video-id="1162159477" 
+                                 data-video-title="Compositing Reel" 
+                                 data-video-subtitle="ID: 1162159477 &bull; Editing, Composition & Grading">
+                                
                                 <iframe 
-                                    src="https://player.vimeo.com/video/1122784946?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;playsinline=1" 
+                                    src="https://player.vimeo.com/video/1162159477?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
                                     frameborder="0" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                    class="absolute top-0 left-0 w-full h-full" 
-                                    title="Showreel / Project 01"
+                                    allow="autoplay; fullscreen" 
+                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01]" 
+                                    title="Compositing Reel Preview Loop"
                                     loading="lazy">
                                 </iframe>
+                                
+                                <!-- Glassmorphic Cyber Play Button Overlay -->
+                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
+                                        <svg class="w-5 h-5 text-zinc-300 fill-current ml-1" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-bold mt-4 tracking-tight">3D & CGI Reel</h3>
-                            <p class="text-xs text-gray-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
+                            <h3 class="text-lg font-bold mt-4 tracking-tight text-zinc-100">Compositing Reel</h3>
+                            <p class="text-xs text-zinc-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition</p>
                         </div>
                     </div>
 
-                    <!-- Video 2 -->
+                    <!-- Video 2 (3D & CGI Reel) -->
                     <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
                         <div>
-                            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/50 shadow-inner relative">
+                            <!-- Clickable Card Wrapper with Dynamic Silent Video Loop Preview -->
+                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-inner relative group cursor-pointer" 
+                                 data-video-id="1122784946" 
+                                 data-video-title="3D & CGI Reel" 
+                                 data-video-subtitle="ID: 1122784946 &bull; VFX, Tracking, 3D Integration">
+                                
                                 <iframe 
-                                    src="https://player.vimeo.com/video/1162159477?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;playsinline=1" 
+                                    src="https://player.vimeo.com/video/1122784946?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
                                     frameborder="0" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
-                                    class="absolute top-0 left-0 w-full h-full" 
-                                    title="Showreel / Project 02"
+                                    allow="autoplay; fullscreen" 
+                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01]" 
+                                    title="3D & CGI Reel Preview Loop"
                                     loading="lazy">
                                 </iframe>
+                                
+                                <!-- Glassmorphic Cyber Play Button Overlay -->
+                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
+                                        <svg class="w-5 h-5 text-zinc-300 fill-current ml-1" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-bold mt-4 tracking-tight">Compositing Reel</h3>
-                            <p class="text-xs text-gray-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition</p>
+                            <h3 class="text-lg font-bold mt-4 tracking-tight text-zinc-100">3D & CGI Reel</h3>
+                            <p class="text-xs text-zinc-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
                         </div>
                     </div>
                 </div>
@@ -246,18 +371,18 @@
 
             <!-- Contact / Action Section -->
             <section id="contact" class="max-w-3xl mx-auto w-full text-center mb-12 scroll-mt-24">
-                <h2 class="text-xs tracking-[0.3em] font-bold text-gray-400 uppercase mb-8">// CONNECT / START PROJECT</h2>
+                <h2 class="text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-8">// CONNECT / START PROJECT</h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4">
                     <!-- Telegram Chrome Card (No border, Soft Shadow) -->
                     <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
                         <div class="flex flex-col items-start text-left">
-                            <span class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">// TELEGRAM</span>
-                            <span class="text-sm font-bold tracking-tight text-gray-800 mt-0.5">@ddsblf</span>
+                            <span class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase">// TELEGRAM</span>
+                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5">@ddsblf</span>
                         </div>
-                        <div class="w-8 h-8 rounded-full bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-center group-hover:bg-white transition-all duration-300 flex-shrink-0">
-                            <svg class="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 group-hover:bg-white text-zinc-300 group-hover:text-black">
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
                         </div>
                     </a>
@@ -265,12 +390,12 @@
                     <!-- Email Chrome Card (No border, Soft Shadow) -->
                     <a href="mailto:langi.staff1@gmail.com" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
                         <div class="flex flex-col items-start text-left min-w-0">
-                            <span class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">// E-MAIL</span>
-                            <span class="text-sm font-bold tracking-tight text-gray-800 mt-0.5 truncate max-w-full">langi.staff1@gmail.com</span>
+                            <span class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase">// E-MAIL</span>
+                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 truncate max-w-full">langi.staff1@gmail.com</span>
                         </div>
-                        <div class="w-8 h-8 rounded-full bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-center group-hover:bg-white transition-all duration-300 flex-shrink-0">
-                            <svg class="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 group-hover:bg-white text-zinc-300 group-hover:text-black">
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
                         </div>
                     </a>
@@ -279,22 +404,69 @@
 
         </main>
 
-        <!-- Footer (Edge-to-Edge with safe padding) -->
-        <footer class="w-full border-t border-gray-200/60 pt-6 mt-12 px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
-            <span class="text-[10px] sm:text-xs font-mono text-gray-400">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</span>
-            <span class="text-[10px] sm:text-xs font-mono text-gray-400">DESIGNED IN FUTURISTIC CHROME</span>
+        <!-- Centered Minimalist Footer -->
+        <footer class="w-full border-t border-zinc-900 pt-6 mt-12 px-6 sm:px-12 lg:px-16 xl:px-20 flex justify-center items-center text-center">
+            <span class="text-[10px] sm:text-xs font-mono text-zinc-500">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</span>
         </footer>
 
     </div>
 
-    <!-- Script: Cinematic Loader, Majestic Splash Reveal, and Page Fade-in -->
+    <!-- Cinematic Theater Lightbox Overlay -->
+    <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/80 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-300 ease-out">
+        <!-- Elegant Close Button -->
+        <button id="close-lightbox" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 group transition-colors focus:outline-none">
+            <span>[ CLOSE ]</span>
+            <span class="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/40 group-hover:bg-white/10 transition-all duration-300">
+                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </span>
+        </button>
+        
+        <!-- Video Theater Box that scales up -->
+        <div id="lightbox-container" class="w-full max-w-5xl px-4 md:px-8 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <div class="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden bg-black border border-white/10 shadow-2xl relative">
+                <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" class="absolute top-0 left-0 w-full h-full"></iframe>
+            </div>
+            <!-- Title & Subtitle below the theater screen -->
+            <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 px-2 text-left">
+                <div>
+                    <h4 id="lightbox-title" class="text-white text-base md:text-lg font-bold tracking-tight">Reel</h4>
+                    <p id="lightbox-subtitle" class="text-white/40 text-[10px] md:text-xs font-mono"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG Filter for Barrel Distortion / Optics Compensation (Backup) -->
+    <svg class="hidden" width="0" height="0">
+        <defs>
+            <filter id="optics-compensation" x="0%" y="0%" width="100%" height="100%">
+                <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><radialGradient id='g' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='%237f7f7f'/><stop offset='100%' stop-color='%23ffffff'/></radialGradient><rect width='200' height='200' fill='url(%23g)'/></svg>" result="lensMap" x="0" y="0" width="100%" height="100%"/>
+                <feDisplacementMap in="SourceGraphic" in2="lensMap" scale="35" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Vimeo SDK for Volume & Playback Controls -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <!-- Script: Cinematic Loader, Page Fade-in and Theater Lightbox -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const introBox = document.getElementById("intro-box");
             const preloader = document.getElementById("preloader");
-            const nameReveal = document.getElementById("name-reveal");
-            const revealedName = document.getElementById("revealed-name");
             const mainContent = document.getElementById("main-content");
+            const loadingText = document.getElementById("loading-text");
+            
+            // Lightbox Elements
+            const lightbox = document.getElementById("video-lightbox");
+            const lightboxContainer = document.getElementById("lightbox-container");
+            const lightboxIframe = document.getElementById("lightbox-iframe");
+            const lightboxTitle = document.getElementById("lightbox-title");
+            const lightboxSubtitle = document.getElementById("lightbox-subtitle");
+            const closeBtn = document.getElementById("close-lightbox");
+            const videoCards = document.querySelectorAll(".video-card-wrapper");
             
             // Rapid high-contrast noise frames inside the loader box
             const frames = [
@@ -319,47 +491,134 @@
                 }
             }, 50);
 
-            // Phase 1: Preloader finishes (1.5 seconds)
+            // Phase 1: Flicker finishes (1.2 seconds) -> Start high-tech 100% Blinking Sequence
             setTimeout(() => {
                 clearInterval(interval);
+                
                 if (introBox) {
-                    introBox.style.transform = 'scale(250)';
-                    introBox.style.opacity = '0';
-                    introBox.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.5s ease';
-                }
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    preloader.style.pointerEvents = 'none';
-                    preloader.style.transition = 'opacity 0.6s ease-out';
+                    introBox.style.display = 'none'; // Hide flickering square instantly
                 }
                 
-                // Phase 2: Beautiful Large Chrome Logo Fade-In (0.2s after preloader starts to fade)
-                setTimeout(() => {
-                    if (nameReveal && revealedName) {
-                        nameReveal.classList.remove('opacity-0');
-                        nameReveal.classList.add('opacity-100');
-                        revealedName.style.transform = 'scale(1)';
-                        revealedName.style.filter = 'blur(0px)';
-                    }
-                }, 200);
-
-                // Phase 3: Logo fades out entirely & main portfolio fades in (1.7s of display time)
-                setTimeout(() => {
-                    if (nameReveal && revealedName) {
-                        nameReveal.style.opacity = '0';
-                        nameReveal.style.transition = 'opacity 0.8s ease-out';
-                        revealedName.style.transform = 'scale(1.04)';
-                        revealedName.style.filter = 'blur(6px)';
-                    }
+                if (loadingText) {
+                    // Show 100%
+                    loadingText.classList.remove('opacity-0');
+                    loadingText.classList.add('opacity-100');
                     
-                    // Main workspace softly fades in
+                    // Double-blink sequence
+                    setTimeout(() => {
+                        loadingText.classList.remove('opacity-100');
+                        loadingText.classList.add('opacity-0'); // Blink 1 OFF
+                        
+                        setTimeout(() => {
+                            loadingText.classList.remove('opacity-0');
+                            loadingText.classList.add('opacity-100'); // Blink 1 ON
+                            
+                            setTimeout(() => {
+                                loadingText.classList.remove('opacity-100');
+                                loadingText.classList.add('opacity-0'); // Blink 2 OFF
+                                
+                                setTimeout(() => {
+                                    loadingText.classList.remove('opacity-0');
+                                    loadingText.classList.add('opacity-100'); // Blink 2 ON (Stay)
+                                    
+                                    // Smoothly fade preloader out and main site content in (No flashes!)
+                                    setTimeout(() => {
+                                        if (preloader) {
+                                            preloader.style.opacity = '0';
+                                            preloader.style.pointerEvents = 'none';
+                                            preloader.style.transition = 'opacity 0.7s ease-out';
+                                        }
+                                        if (mainContent) {
+                                            mainContent.classList.remove('opacity-0');
+                                            mainContent.classList.add('opacity-100');
+                                        }
+                                    }, 400);
+
+                                }, 120);
+                            }, 120);
+                        }, 120);
+                    }, 200);
+                } else {
+                    // Fallback safety trigger
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        preloader.style.pointerEvents = 'none';
+                    }
                     if (mainContent) {
                         mainContent.classList.remove('opacity-0');
                         mainContent.classList.add('opacity-100');
                     }
-                }, 1700);
+                }
 
-            }, 1500);
+            }, 1200);
+
+            // Theater Lightbox Interactions
+            videoCards.forEach(card => {
+                card.addEventListener("click", () => {
+                    const videoId = card.getAttribute("data-video-id");
+                    const videoTitle = card.getAttribute("data-video-title");
+                    const videoSubtitle = card.getAttribute("data-video-subtitle");
+                    
+                    // Assemble the interactive player with autoplay
+                    lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479&playsinline=1`;
+                    lightboxTitle.textContent = videoTitle;
+                    // Replace HTML bullet points with plain text
+                    lightboxSubtitle.textContent = videoSubtitle.replace('&bull;', '•');
+
+                    // Turn on Lightbox Overlay
+                    lightbox.classList.remove("opacity-0", "pointer-events-none");
+                    lightbox.classList.add("opacity-100");
+                    
+                    // Smooth Cinematic Scale Zoom-in of the theater window
+                    setTimeout(() => {
+                        lightboxContainer.classList.remove("scale-95", "opacity-0");
+                        lightboxContainer.classList.add("scale-100", "opacity-100");
+                    }, 50);
+
+                    // Initialize Vimeo Player SDK & Set Volume to 0.5
+                    const player = new Vimeo.Player(lightboxIframe);
+                    player.ready().then(() => {
+                        player.setVolume(0.5)
+                            .then(() => {
+                                console.log('Volume initialized to 50%');
+                            })
+                            .catch((error) => {
+                                console.warn('Volume settings restricted on this OS/Device:', error);
+                            });
+                    }).catch(err => {
+                        console.error('Vimeo Player error:', err);
+                    });
+                });
+            });
+
+            // Smooth Close animation logic
+            const closeLightbox = () => {
+                lightboxContainer.classList.remove("scale-100", "opacity-100");
+                lightboxContainer.classList.add("scale-95", "opacity-0");
+                
+                setTimeout(() => {
+                    lightbox.classList.remove("opacity-100");
+                    lightbox.classList.add("opacity-0", "pointer-events-none");
+                    // Important: Reset iframe source to completely kill sound/video instantly on close
+                    lightboxIframe.src = "";
+                }, 250);
+            };
+
+            closeBtn.addEventListener("click", closeLightbox);
+            
+            // Close by tapping outer dark blurred area (excluding actual video and subtitle text)
+            lightbox.addEventListener("click", (e) => {
+                if (!e.target.closest('.aspect-video') && !e.target.closest('.mt-4') && !closeBtn.contains(e.target)) {
+                    closeLightbox();
+                }
+            });
+
+            // Close on ESC key press
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && !lightbox.classList.contains("pointer-events-none")) {
+                    closeLightbox();
+                }
+            });
         });
     </script>
 </body>
