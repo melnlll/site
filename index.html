@@ -258,9 +258,9 @@
     <!-- Main Content Wrapper (Smoothly fades in after title intro) -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-out flex-grow flex flex-col justify-between">
         
-        <!-- Top Navigation Area (Edge-to-Edge with safe padding) -->
+        <!-- Top Navigation Area (Edge-to-Edge with safe padding - Reverted to micro-size on mobile) -->
         <header class="w-full px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-row justify-between items-start gap-2 mb-12">
-            <!-- Left Aligned Info -->
+            <!-- Left Aligned Info (Micro text size on mobile) -->
             <div class="flex flex-col items-start gap-1">
                 <a href="#portfolio" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors">
                     // ART PORTFOLIO
@@ -269,8 +269,8 @@
                     // CONTACT
                 </a>
             </div>
-            <!-- Right Aligned Info -->
-            <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm whitespace-nowrap self-start">
+            <!-- Right Aligned Info (Micro text size on mobile) -->
+            <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm whitespace-nowrap self-start">
                 <span class="pulse-dot"></span>
                 <span>AVAILABLE FOR WORK 2026</span>
             </div>
@@ -279,31 +279,32 @@
         <!-- Main Workspace Container (Expanded to max-w-7xl for maximum desktop presence) -->
         <main class="max-w-7xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
             
-            <!-- Hero / Description Block -->
+            <!-- Hero / Description Block (Bracketed subheader, ultra-refined micro size on mobile) -->
             <section class="text-center mb-16 relative py-12 flex flex-col items-center justify-center select-none">
                 <div class="flex flex-col items-center">
-                    <p class="text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] text-zinc-400 font-extrabold uppercase mb-6 text-center">
-                        Visual Effects &bull; 3D CGI &bull; Editor
+                    <!-- Reduced tracking-[0.25em] for top row on desktop to make bottom row wider -->
+                    <p class="text-[9px] min-[375px]:text-[10px] sm:text-sm md:text-base tracking-[0.18em] sm:tracking-[0.25em] text-zinc-400 font-extrabold uppercase mb-6 text-center whitespace-nowrap">
+                        [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
                     </p>
                     
-                    <!-- Tags / Services List -->
-                    <div class="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto px-4">
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[COMPOSITING]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[3D ART]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[CAMERA TRACKING]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[ROTO & CLEANUP]</span>
-                        <span class="px-3 py-1 text-[10px] sm:text-xs border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[VIDEO EDITING]</span>
+                    <!-- Tags / Services List (Expanded container limit to max-w-4xl to prevent wrapping on PC) -->
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 max-w-4xl mx-auto px-4">
+                        <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[COMPOSITING]</span>
+                        <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[3D ART]</span>
+                        <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[CAMERA TRACKING]</span>
+                        <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[ROTO & CLEANUP]</span>
+                        <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[VIDEO EDITING]</span>
                     </div>
                 </div>
             </section>
 
             <!-- Video Portfolio Section -->
             <section id="portfolio" class="mb-20 scroll-mt-24">
-                <h2 class="text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase text-center mb-12">// SELECTED WORK SHOWCASE</h2>
+                <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase text-center mb-12">// SELECTED WORK SHOWCASE</h2>
                 
                 <!-- Single Column Cinematic Layout: Constrained to max-w-6xl (1152px) for a grand presentation on PC -->
                 <div class="grid grid-cols-1 gap-12 md:gap-20 lg:gap-24 max-w-6xl mx-auto w-full">
-                    <!-- Video 1 (Compositing Reel - Swapped to first) -->
+                    <!-- Video 1 (Compositing Reel - First) -->
                     <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
                         <div>
                             <!-- Clickable Card Wrapper with Dynamic Silent Video Loop Preview -->
@@ -321,17 +322,17 @@
                                     loading="lazy">
                                 </iframe>
                                 
-                                <!-- Glassmorphic Cyber Play Button Overlay -->
+                                <!-- Glassmorphic Cyber Play Button Overlay (Perfect visually and mathematically centered triangle) -->
                                 <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
                                     <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
-                                        <svg class="w-5 h-5 text-zinc-300 fill-current ml-1" viewBox="0 0 24 24">
+                                        <svg class="w-5 h-5 text-zinc-300 fill-current -translate-x-[1px]" viewBox="0 0 24 24">
                                             <path d="M8 5v14l11-7z"/>
                                         </svg>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-bold mt-4 tracking-tight text-zinc-100">Compositing Reel</h3>
-                            <p class="text-xs text-zinc-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition</p>
+                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">Compositing Reel</h3>
+                            <p class="text-xs sm:text-sm text-zinc-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition & Grading</p>
                         </div>
                     </div>
 
@@ -353,17 +354,17 @@
                                     loading="lazy">
                                 </iframe>
                                 
-                                <!-- Glassmorphic Cyber Play Button Overlay -->
+                                <!-- Glassmorphic Cyber Play Button Overlay (Perfect visually and mathematically centered triangle) -->
                                 <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
                                     <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
-                                        <svg class="w-5 h-5 text-zinc-300 fill-current ml-1" viewBox="0 0 24 24">
+                                        <svg class="w-5 h-5 text-zinc-300 fill-current -translate-x-[1px]" viewBox="0 0 24 24">
                                             <path d="M8 5v14l11-7z"/>
                                         </svg>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-bold mt-4 tracking-tight text-zinc-100">3D & CGI Reel</h3>
-                            <p class="text-xs text-zinc-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
+                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">3D & CGI Reel</h3>
+                            <p class="text-xs sm:text-sm text-zinc-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
                         </div>
                     </div>
                 </div>
@@ -371,7 +372,7 @@
 
             <!-- Contact / Action Section -->
             <section id="contact" class="max-w-3xl mx-auto w-full text-center mb-12 scroll-mt-24">
-                <h2 class="text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-8">// CONNECT / START PROJECT</h2>
+                <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-8">// CONNECT / START PROJECT</h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4">
                     <!-- Telegram Chrome Card (No border, Soft Shadow) -->
