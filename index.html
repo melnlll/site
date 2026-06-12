@@ -375,31 +375,35 @@
                 <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-8">// CONNECT / START PROJECT</h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4">
-                    <!-- Telegram Chrome Card (No border, Soft Shadow) -->
-                    <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
-                        <div class="flex flex-col items-start text-left">
-                            <span class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase">// TELEGRAM</span>
-                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5">@ddsblf</span>
+                    <!-- Telegram Chrome Card (Clickable copyable text wrapper with stopPropagation) -->
+                    <div class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px] relative select-none">
+                        <!-- Copy Trigger Area -->
+                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10" data-copy="@ddsblf" data-label="telegram-label" data-default="// TELEGRAM">
+                            <span id="telegram-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// TELEGRAM</span>
+                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors select-all">@ddsblf</span>
                         </div>
-                        <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 group-hover:bg-white text-zinc-300 group-hover:text-black">
+                        <!-- Redirect Anchor Button -->
+                        <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10">
                             <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
 
-                    <!-- Email Chrome Card (No border, Soft Shadow) -->
-                    <a href="mailto:langi.staff1@gmail.com" class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px]">
-                        <div class="flex flex-col items-start text-left min-w-0">
-                            <span class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase">// E-MAIL</span>
-                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 truncate max-w-full">langi.staff1@gmail.com</span>
+                    <!-- Email Chrome Card (Clickable copyable text wrapper with stopPropagation) -->
+                    <div class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px] relative min-w-0 select-none">
+                        <!-- Copy Trigger Area -->
+                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 min-w-0" data-copy="langi.staff1@gmail.com" data-label="email-label" data-default="// E-MAIL">
+                            <span id="email-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// E-MAIL</span>
+                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors truncate max-w-full select-all">langi.staff1@gmail.com</span>
                         </div>
-                        <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 group-hover:bg-white text-zinc-300 group-hover:text-black">
+                        <!-- Redirect Anchor Button -->
+                        <a href="mailto:langi.staff1@gmail.com" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10">
                             <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </section>
 
@@ -620,6 +624,64 @@
                     closeLightbox();
                 }
             });
+
+            // Click to Copy Logic with stopPropagation
+            const copyTriggers = document.querySelectorAll(".copy-trigger");
+            
+            copyTriggers.forEach(trigger => {
+                trigger.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevents the outer link redirection
+                    
+                    const valueToCopy = trigger.getAttribute("data-copy");
+                    const labelId = trigger.getAttribute("data-label");
+                    const defaultLabel = trigger.getAttribute("data-default");
+                    const labelElement = document.getElementById(labelId);
+                    
+                    // Copy action using standard Clipboard API
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(valueToCopy)
+                            .then(() => {
+                                triggerLabelCopied(labelElement, defaultLabel);
+                            })
+                            .catch(err => {
+                                console.error('Clipboard write error, falling back:', err);
+                                fallbackCopyAction(valueToCopy, labelElement, defaultLabel);
+                            });
+                    } else {
+                        fallbackCopyAction(valueToCopy, labelElement, defaultLabel);
+                    }
+                });
+            });
+
+            // Green "COPIED" visual feedback trigger
+            function triggerLabelCopied(element, defaultText) {
+                if (!element) return;
+                element.textContent = "// COPIED!";
+                element.style.color = "#10B981"; // Emerald green
+                
+                setTimeout(() => {
+                    element.textContent = defaultText;
+                    element.style.color = ""; // Revert to zinc-500
+                }, 1500);
+            }
+
+            // Fallback for older browsers or restricted WebViews
+            function fallbackCopyAction(text, element, defaultText) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed"; // Prevents screen jump
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    triggerLabelCopied(element, defaultText);
+                } catch (err) {
+                    console.error('Fallback copy action failed:', err);
+                }
+                document.body.removeChild(textArea);
+            }
         });
     </script>
 </body>
