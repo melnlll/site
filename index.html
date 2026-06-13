@@ -133,7 +133,7 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            0 { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
@@ -156,90 +156,19 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between py-8 px-0">
 
-    <!-- 10mm Lens Vector Optics Grid (Symmetric Pinched Grid - Spacing 30, Offset Center, Ultra-thin stroke) -->
+    <!-- 10mm Lens Vector Optics Grid -->
     <div class="grid-bg">
         <svg class="w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="0.5">
-            <!-- Symmetrical Vertical Grid Lines (Offset, Spacing 30) -->
-            <!-- Left Side -->
-            <path d="M 5 0 Q 144 500 5 1000" />
-            <path d="M 35 0 Q 165 500 35 1000" />
-            <path d="M 65 0 Q 187 500 65 1000" />
-            <path d="M 95 0 Q 208 500 95 1000" />
-            <path d="M 125 0 Q 230 500 125 1000" />
-            <path d="M 155 0 Q 252 500 155 1000" />
-            <path d="M 185 0 Q 273 500 185 1000" />
-            <path d="M 215 0 Q 295 500 215 1000" />
-            <path d="M 245 0 Q 316 500 245 1000" />
-            <path d="M 275 0 Q 338 500 275 1000" />
-            <path d="M 305 0 Q 360 500 305 1000" />
-            <path d="M 335 0 Q 381 500 335 1000" />
-            <path d="M 365 0 Q 403 500 365 1000" />
-            <path d="M 395 0 Q 424 500 395 1000" />
-            <path d="M 425 0 Q 446 500 425 1000" />
-            <path d="M 455 0 Q 468 500 455 1000" />
-            <path d="M 485 0 Q 489 500 485 1000" />
-            
-            <!-- Right Side -->
-            <path d="M 515 0 Q 511 500 515 1000" />
-            <path d="M 545 0 Q 532 500 545 1000" />
-            <path d="M 575 0 Q 554 500 575 1000" />
-            <path d="M 605 0 Q 576 500 605 1000" />
-            <path d="M 635 0 Q 597 500 635 1000" />
-            <path d="M 665 0 Q 619 500 665 1000" />
-            <path d="M 695 0 Q 640 500 695 1000" />
-            <path d="M 725 0 Q 662 500 725 1000" />
-            <path d="M 755 0 Q 684 500 755 1000" />
-            <path d="M 785 0 Q 705 500 785 1000" />
-            <path d="M 815 0 Q 727 500 815 1000" />
-            <path d="M 845 0 Q 748 500 845 1000" />
-            <path d="M 875 0 Q 770 500 875 1000" />
-            <path d="M 905 0 Q 792 500 905 1000" />
-            <path d="M 935 0 Q 813 500 935 1000" />
-            <path d="M 965 0 Q 835 500 965 1000" />
-            <path d="M 995 0 Q 856 500 995 1000" />
-            
-            <!-- Symmetrical Horizontal Grid Lines (Offset, Spacing 30) -->
-            <!-- Top Side -->
-            <path d="M 0 5 Q 500 144 1000 5" />
-            <path d="M 0 35 Q 500 165 1000 35" />
-            <path d="M 0 65 Q 500 187 1000 65" />
-            <path d="M 0 95 Q 500 208 1000 95" />
-            <path d="M 0 125 Q 500 230 1000 125" />
-            <path d="M 0 155 Q 500 252 1000 155" />
-            <path d="M 0 185 Q 500 273 1000 185" />
-            <path d="M 0 215 Q 500 295 1000 215" />
-            <path d="M 0 245 Q 500 316 1000 245" />
-            <path d="M 0 275 Q 500 338 1000 275" />
-            <path d="M 0 305 Q 500 360 1000 305" />
-            <path d="M 0 335 Q 500 381 1000 335" />
-            <path d="M 0 365 Q 500 403 1000 365" />
-            <path d="M 0 395 Q 500 424 1000 395" />
-            <path d="M 0 425 Q 500 446 1000 425" />
-            <path d="M 0 455 Q 500 468 1000 455" />
-            <path d="M 0 485 Q 500 489 1000 485" />
-            
-            <!-- Bottom Side -->
-            <path d="M 0 515 Q 500 511 1000 515" />
-            <path d="M 0 545 Q 500 532 1000 545" />
-            <path d="M 0 575 Q 500 554 1000 575" />
-            <path d="M 0 605 Q 500 576 1000 605" />
-            <path d="M 0 635 Q 500 597 1000 635" />
-            <path d="M 0 665 Q 500 619 1000 665" />
-            <path d="M 0 695 Q 500 640 1000 695" />
-            <path d="M 0 725 Q 500 662 1000 725" />
-            <path d="M 0 755 Q 500 684 1000 755" />
-            <path d="M 0 785 Q 500 705 1000 785" />
-            <path d="M 0 815 Q 500 727 1000 815" />
-            <path d="M 0 845 Q 500 748 1000 845" />
-            <path d="M 0 875 Q 500 770 1000 875" />
-            <path d="M 0 905 Q 500 792 1000 905" />
-            <path d="M 0 935 Q 500 813 1000 935" />
-            <path d="M 0 965 Q 500 835 1000 965" />
-            <path d="M 0 995 Q 500 856 1000 995" />
+            <!-- Symmetrical Vertical Grid Lines -->
+            <path d="M 5 0 Q 144 500 5 1000" /><path d="M 35 0 Q 165 500 35 1000" /><path d="M 65 0 Q 187 500 65 1000" /><path d="M 95 0 Q 208 500 95 1000" /><path d="M 125 0 Q 230 500 125 1000" /><path d="M 155 0 Q 252 500 155 1000" /><path d="M 185 0 Q 273 500 185 1000" /><path d="M 215 0 Q 295 500 215 1000" /><path d="M 245 0 Q 316 500 245 1000" /><path d="M 275 0 Q 338 500 275 1000" /><path d="M 305 0 Q 360 500 305 1000" /><path d="M 335 0 Q 381 500 335 1000" /><path d="M 365 0 Q 403 500 365 1000" /><path d="M 395 0 Q 424 500 395 1000" /><path d="M 425 0 Q 446 500 425 1000" /><path d="M 455 0 Q 468 500 455 1000" /><path d="M 485 0 Q 489 500 485 1000" />
+            <path d="M 515 0 Q 511 500 515 1000" /><path d="M 545 0 Q 532 500 545 1000" /><path d="M 575 0 Q 554 500 575 1000" /><path d="M 605 0 Q 576 500 605 1000" /><path d="M 635 0 Q 597 500 635 1000" /><path d="M 665 0 Q 619 500 665 1000" /><path d="M 695 0 Q 640 500 695 1000" /><path d="M 725 0 Q 662 500 725 1000" /><path d="M 755 0 Q 684 500 755 1000" /><path d="M 785 0 Q 705 500 785 1000" /><path d="M 815 0 Q 727 500 815 1000" /><path d="M 845 0 Q 748 500 845 1000" /><path d="M 875 0 Q 770 500 875 1000" /><path d="M 905 0 Q 792 500 905 1000" /><path d="M 935 0 Q 813 500 935 1000" /><path d="M 965 0 Q 835 500 965 1000" /><path d="M 995 0 Q 856 500 995 1000" />
+            <!-- Symmetrical Horizontal Grid Lines -->
+            <path d="M 0 5 Q 500 144 1000 5" /><path d="M 0 35 Q 500 165 1000 35" /><path d="M 0 65 Q 500 187 1000 65" /><path d="M 0 95 Q 500 208 1000 95" /><path d="M 0 125 Q 500 230 1000 125" /><path d="M 0 155 Q 500 252 1000 155" /><path d="M 0 185 Q 500 273 1000 185" /><path d="M 0 215 Q 500 295 1000 215" /><path d="M 0 245 Q 500 316 1000 245" /><path d="M 0 275 Q 500 338 1000 275" /><path d="M 0 305 Q 500 360 1000 305" /><path d="M 0 335 Q 500 381 1000 335" /><path d="M 0 365 Q 500 403 1000 365" /><path d="M 0 395 Q 500 424 1000 395" /><path d="M 0 425 Q 500 446 1000 425" /><path d="M 0 455 Q 500 468 1000 455" /><path d="M 0 485 Q 500 489 1000 485" />
+            <path d="M 0 515 Q 500 511 1000 515" /><path d="M 0 545 Q 500 532 1000 545" /><path d="M 0 575 Q 500 554 1000 575" /><path d="M 0 605 Q 500 576 1000 605" /><path d="M 0 635 Q 500 597 1000 635" /><path d="M 0 665 Q 500 619 1000 665" /><path d="M 0 695 Q 500 640 1000 695" /><path d="M 0 725 Q 500 662 1000 725" /><path d="M 0 755 Q 500 684 1000 755" /><path d="M 0 785 Q 500 705 1000 785" /><path d="M 0 815 Q 500 727 1000 815" /><path d="M 0 845 Q 500 748 1000 845" /><path d="M 0 875 Q 500 770 1000 875" /><path d="M 0 905 Q 500 792 1000 905" /><path d="M 0 935 Q 500 813 1000 935" /><path d="M 0 965 Q 500 835 1000 965" /><path d="M 0 995 Q 500 856 1000 995" />
         </svg>
     </div>
 
-    <!-- Radial Lens Blur Overlay (Smooth focusing at edges) -->
+    <!-- Radial Lens Blur Overlay -->
     <div class="lens-blur"></div>
 
     <!-- Authentic Lens Vignette Shadow Overlay -->
@@ -258,9 +187,8 @@
     <!-- Main Content Wrapper (Smoothly fades in after title intro) -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-out flex-grow flex flex-col justify-between">
         
-        <!-- Top Navigation Area (Edge-to-Edge with safe padding - Reverted to micro-size on mobile) -->
+        <!-- Top Navigation Area -->
         <header class="w-full px-6 sm:px-12 lg:px-16 xl:px-20 flex flex-row justify-between items-start gap-2 mb-12">
-            <!-- Left Aligned Info (Micro text size on mobile) -->
             <div class="flex flex-col items-start gap-1">
                 <a href="#portfolio" class="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors">
                     // ART PORTFOLIO
@@ -269,25 +197,23 @@
                     // CONTACT
                 </a>
             </div>
-            <!-- Right Aligned Info (Micro text size on mobile) -->
             <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm whitespace-nowrap self-start">
                 <span class="pulse-dot"></span>
                 <span>AVAILABLE FOR WORK 2026</span>
             </div>
         </header>
 
-        <!-- Main Workspace Container (Expanded to max-w-7xl for maximum desktop presence) -->
+        <!-- Main Workspace Container -->
         <main class="max-w-7xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
             
-            <!-- Hero / Description Block (Bracketed subheader, ultra-refined micro size on mobile) -->
+            <!-- Hero / Description Block -->
             <section class="text-center mb-16 relative py-12 flex flex-col items-center justify-center select-none">
                 <div class="flex flex-col items-center">
-                    <!-- Reduced tracking-[0.25em] for top row on desktop to make bottom row wider -->
                     <p class="text-[9px] min-[375px]:text-[10px] sm:text-sm md:text-base tracking-[0.18em] sm:tracking-[0.25em] text-zinc-400 font-extrabold uppercase mb-6 text-center whitespace-nowrap">
                         [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
                     </p>
                     
-                    <!-- Tags / Services List (Expanded container limit to max-w-4xl to prevent wrapping on PC) -->
+                    <!-- Tags / Services List -->
                     <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 max-w-4xl mx-auto px-4">
                         <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[COMPOSITING]</span>
                         <span class="px-3.5 py-1 text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 backdrop-blur-sm font-mono">[3D ART]</span>
@@ -302,27 +228,32 @@
             <section id="portfolio" class="mb-20 scroll-mt-24">
                 <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase text-center mb-12">// SELECTED WORK SHOWCASE</h2>
                 
-                <!-- Single Column Cinematic Layout: Constrained to max-w-6xl (1152px) for a grand presentation on PC -->
                 <div class="grid grid-cols-1 gap-12 md:gap-20 lg:gap-24 max-w-6xl mx-auto w-full">
-                    <!-- Video 1 (Compositing Reel - First) -->
+                    <!-- Video 1 (Compositing Reel) -->
                     <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
                         <div>
-                            <!-- Clickable Card Wrapper with Dynamic Silent Video Loop Preview -->
-                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-inner relative group cursor-pointer" 
+                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 shadow-inner relative group cursor-pointer" 
                                  data-video-id="1162159477" 
-                                 data-video-title="Compositing Reel" 
+                                 data-video-title="Compositing Reel 2026" 
                                  data-video-subtitle="ID: 1162159477 &bull; Editing, Composition & Grading">
                                 
+                                <!-- Mobile Static UI Placeholder -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 to-zinc-900 flex items-center justify-center md:hidden">
+                                    <span class="text-[10px] font-mono tracking-widest text-zinc-600">// PREVIEW</span>
+                                </div>
+
+                                <!-- Desktop Silent Video Loop -->
                                 <iframe 
                                     src="https://player.vimeo.com/video/1162159477?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
                                     frameborder="0" 
-                                    allow="autoplay; fullscreen" 
-                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01]" 
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01] hidden md:block" 
                                     title="Compositing Reel Preview Loop"
                                     loading="lazy">
                                 </iframe>
                                 
-                                <!-- Glassmorphic Cyber Play Button Overlay (Perfect visually and mathematically centered triangle) -->
+                                <!-- Glassmorphic Play Button -->
                                 <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
                                     <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
                                         <svg class="w-5 h-5 text-zinc-300 fill-current -translate-x-[1px]" viewBox="0 0 24 24">
@@ -331,30 +262,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">Compositing Reel</h3>
+                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">Compositing Reel 2026</h3>
                             <p class="text-xs sm:text-sm text-zinc-500 mt-1 font-mono">ID: 1162159477 &bull; Editing, Composition & Grading</p>
                         </div>
                     </div>
 
-                    <!-- Video 2 (3D & CGI Reel) -->
+                    <!-- Video 2 (VFX Reel) -->
                     <div class="y2k-card p-4 rounded-3xl flex flex-col justify-between">
                         <div>
-                            <!-- Clickable Card Wrapper with Dynamic Silent Video Loop Preview -->
-                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-black border border-white/10 shadow-inner relative group cursor-pointer" 
+                            <div class="video-card-wrapper aspect-video w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 shadow-inner relative group cursor-pointer" 
                                  data-video-id="1122784946" 
-                                 data-video-title="3D & CGI Reel" 
+                                 data-video-title="VFX Reel 2026" 
                                  data-video-subtitle="ID: 1122784946 &bull; VFX, Tracking, 3D Integration">
                                 
+                                <!-- Mobile Static UI Placeholder -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 to-zinc-900 flex items-center justify-center md:hidden">
+                                    <span class="text-[10px] font-mono tracking-widest text-zinc-600">// PREVIEW</span>
+                                </div>
+
+                                <!-- Desktop Silent Video Loop -->
                                 <iframe 
                                     src="https://player.vimeo.com/video/1122784946?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
                                     frameborder="0" 
-                                    allow="autoplay; fullscreen" 
-                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01]" 
-                                    title="3D & CGI Reel Preview Loop"
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01] hidden md:block" 
+                                    title="VFX Reel Preview Loop"
                                     loading="lazy">
                                 </iframe>
                                 
-                                <!-- Glassmorphic Cyber Play Button Overlay (Perfect visually and mathematically centered triangle) -->
+                                <!-- Glassmorphic Play Button -->
                                 <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-500 flex items-center justify-center">
                                     <div class="w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all duration-300">
                                         <svg class="w-5 h-5 text-zinc-300 fill-current -translate-x-[1px]" viewBox="0 0 24 24">
@@ -363,7 +300,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">3D & CGI Reel</h3>
+                            <h3 class="text-lg sm:text-xl font-bold mt-4 tracking-tight text-zinc-100">VFX Reel 2026</h3>
                             <p class="text-xs sm:text-sm text-zinc-500 mt-1 font-mono">ID: 1122784946 &bull; VFX, Tracking, 3D Integration</p>
                         </div>
                     </div>
@@ -375,14 +312,12 @@
                 <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-8">// CONNECT / START PROJECT</h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4">
-                    <!-- Telegram Chrome Card (Clickable copyable text wrapper with stopPropagation) -->
+                    <!-- Telegram Card -->
                     <div class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px] relative select-none">
-                        <!-- Copy Trigger Area -->
                         <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10" data-copy="@ddsblf" data-label="telegram-label" data-default="// TELEGRAM">
                             <span id="telegram-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// TELEGRAM</span>
                             <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors select-all">@ddsblf</span>
                         </div>
-                        <!-- Redirect Anchor Button -->
                         <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10">
                             <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -390,14 +325,12 @@
                         </a>
                     </div>
 
-                    <!-- Email Chrome Card (Clickable copyable text wrapper with stopPropagation) -->
+                    <!-- Email Card -->
                     <div class="modern-chrome-btn p-5 rounded-2xl flex items-center justify-between gap-4 group min-h-[80px] relative min-w-0 select-none">
-                        <!-- Copy Trigger Area -->
                         <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 min-w-0" data-copy="langi.staff1@gmail.com" data-label="email-label" data-default="// E-MAIL">
                             <span id="email-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// E-MAIL</span>
                             <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors truncate max-w-full select-all">langi.staff1@gmail.com</span>
                         </div>
-                        <!-- Redirect Anchor Button -->
                         <a href="mailto:langi.staff1@gmail.com" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-350 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10">
                             <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -409,7 +342,7 @@
 
         </main>
 
-        <!-- Centered Minimalist Footer -->
+        <!-- Footer -->
         <footer class="w-full border-t border-zinc-900 pt-6 mt-12 px-6 sm:px-12 lg:px-16 xl:px-20 flex justify-center items-center text-center">
             <span class="text-[10px] sm:text-xs font-mono text-zinc-500">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</span>
         </footer>
@@ -418,7 +351,6 @@
 
     <!-- Cinematic Theater Lightbox Overlay -->
     <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/80 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-300 ease-out">
-        <!-- Elegant Close Button -->
         <button id="close-lightbox" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 group transition-colors focus:outline-none">
             <span>[ CLOSE ]</span>
             <span class="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/40 group-hover:bg-white/10 transition-all duration-300">
@@ -428,12 +360,10 @@
             </span>
         </button>
         
-        <!-- Video Theater Box that scales up -->
         <div id="lightbox-container" class="w-full max-w-5xl px-4 md:px-8 transform scale-95 opacity-0 transition-all duration-300 ease-out">
             <div class="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden bg-black border border-white/10 shadow-2xl relative">
-                <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" class="absolute top-0 left-0 w-full h-full"></iframe>
+                <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
-            <!-- Title & Subtitle below the theater screen -->
             <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 px-2 text-left">
                 <div>
                     <h4 id="lightbox-title" class="text-white text-base md:text-lg font-bold tracking-tight">Reel</h4>
@@ -442,16 +372,6 @@
             </div>
         </div>
     </div>
-
-    <!-- SVG Filter for Barrel Distortion / Optics Compensation (Backup) -->
-    <svg class="hidden" width="0" height="0">
-        <defs>
-            <filter id="optics-compensation" x="0%" y="0%" width="100%" height="100%">
-                <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><radialGradient id='g' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='%237f7f7f'/><stop offset='100%' stop-color='%23ffffff'/></radialGradient><rect width='200' height='200' fill='url(%23g)'/></svg>" result="lensMap" x="0" y="0" width="100%" height="100%"/>
-                <feDisplacementMap in="SourceGraphic" in2="lensMap" scale="35" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-        </defs>
-    </svg>
 
     <!-- Vimeo SDK for Volume & Playback Controls -->
     <script src="https://player.vimeo.com/api/player.js"></script>
@@ -464,7 +384,6 @@
             const mainContent = document.getElementById("main-content");
             const loadingText = document.getElementById("loading-text");
             
-            // Lightbox Elements
             const lightbox = document.getElementById("video-lightbox");
             const lightboxContainer = document.getElementById("lightbox-container");
             const lightboxIframe = document.getElementById("lightbox-iframe");
@@ -473,19 +392,11 @@
             const closeBtn = document.getElementById("close-lightbox");
             const videoCards = document.querySelectorAll(".video-card-wrapper");
             
-            // Rapid high-contrast noise frames inside the loader box
             const frames = [
-                '#000000',
-                '#ffffff',
-                'repeating-linear-gradient(45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
-                '#000000',
-                'repeating-linear-gradient(-45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
-                '#ffffff',
-                'radial-gradient(circle, #000 20%, #fff 60%)',
-                '#000000',
-                'conic-gradient(#000, #fff, #000)',
-                '#ffffff',
-                'repeating-radial-gradient(circle, #000 0px, #000 1px, #fff 1px, #fff 2px)'
+                '#000000', '#ffffff', 'repeating-linear-gradient(45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
+                '#000000', 'repeating-linear-gradient(-45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)', '#ffffff',
+                'radial-gradient(circle, #000 20%, #fff 60%)', '#000000', 'conic-gradient(#000, #fff, #000)',
+                '#ffffff', 'repeating-radial-gradient(circle, #000 0px, #000 1px, #fff 1px, #fff 2px)'
             ];
             
             let frameIndex = 0;
@@ -496,37 +407,30 @@
                 }
             }, 50);
 
-            // Phase 1: Flicker finishes (1.2 seconds) -> Start high-tech 100% Blinking Sequence
             setTimeout(() => {
                 clearInterval(interval);
-                
-                if (introBox) {
-                    introBox.style.display = 'none'; // Hide flickering square instantly
-                }
+                if (introBox) introBox.style.display = 'none';
                 
                 if (loadingText) {
-                    // Show 100%
                     loadingText.classList.remove('opacity-0');
                     loadingText.classList.add('opacity-100');
                     
-                    // Double-blink sequence
                     setTimeout(() => {
                         loadingText.classList.remove('opacity-100');
-                        loadingText.classList.add('opacity-0'); // Blink 1 OFF
+                        loadingText.classList.add('opacity-0');
                         
                         setTimeout(() => {
                             loadingText.classList.remove('opacity-0');
-                            loadingText.classList.add('opacity-100'); // Blink 1 ON
+                            loadingText.classList.add('opacity-100');
                             
                             setTimeout(() => {
                                 loadingText.classList.remove('opacity-100');
-                                loadingText.classList.add('opacity-0'); // Blink 2 OFF
+                                loadingText.classList.add('opacity-0');
                                 
                                 setTimeout(() => {
                                     loadingText.classList.remove('opacity-0');
-                                    loadingText.classList.add('opacity-100'); // Blink 2 ON (Stay)
+                                    loadingText.classList.add('opacity-100');
                                     
-                                    // Smoothly fade preloader out and main site content in (No flashes!)
                                     setTimeout(() => {
                                         if (preloader) {
                                             preloader.style.opacity = '0';
@@ -538,13 +442,11 @@
                                             mainContent.classList.add('opacity-100');
                                         }
                                     }, 400);
-
                                 }, 120);
                             }, 120);
                         }, 120);
                     }, 200);
                 } else {
-                    // Fallback safety trigger
                     if (preloader) {
                         preloader.style.opacity = '0';
                         preloader.style.pointerEvents = 'none';
@@ -554,49 +456,48 @@
                         mainContent.classList.add('opacity-100');
                     }
                 }
-
             }, 1200);
 
-            // Theater Lightbox Interactions
+            // Lightbox interactions with unified volume sync
             videoCards.forEach(card => {
                 card.addEventListener("click", () => {
                     const videoId = card.getAttribute("data-video-id");
                     const videoTitle = card.getAttribute("data-video-title");
                     const videoSubtitle = card.getAttribute("data-video-subtitle");
                     
-                    // Assemble the interactive player with autoplay
-                    lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479&playsinline=1`;
+                    // Unified embed link construction
+                    lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0&badge=0&autopause=0&player_id=0&app_id=58479&playsinline=1`;
                     lightboxTitle.textContent = videoTitle;
-                    // Replace HTML bullet points with plain text
                     lightboxSubtitle.textContent = videoSubtitle.replace('&bull;', '•');
 
-                    // Turn on Lightbox Overlay
                     lightbox.classList.remove("opacity-0", "pointer-events-none");
                     lightbox.classList.add("opacity-100");
                     
-                    // Smooth Cinematic Scale Zoom-in of the theater window
                     setTimeout(() => {
                         lightboxContainer.classList.remove("scale-95", "opacity-0");
                         lightboxContainer.classList.add("scale-100", "opacity-100");
                     }, 50);
 
-                    // Initialize Vimeo Player SDK & Set Volume to 0.5
+                    // Initialize Player
                     const player = new Vimeo.Player(lightboxIframe);
-                    player.ready().then(() => {
-                        player.setVolume(0.5)
+                    
+                    // Wait until playback starts to overwrite browser and Vimeo cookie cache settings
+                    player.on('play', () => {
+                        player.setMuted(false)
                             .then(() => {
-                                console.log('Volume initialized to 50%');
+                                return player.setVolume(0.5); // Unified 50% default volume on desktop
                             })
-                            .catch((error) => {
-                                console.warn('Volume settings restricted on this OS/Device:', error);
+                            .then(() => {
+                                console.log('Volume synchronized to 50%');
+                            })
+                            .catch((err) => {
+                                // Silent warning bypass for mobile environments that disable JS volume control
+                                console.log('OS level volume restriction bypass active');
                             });
-                    }).catch(err => {
-                        console.error('Vimeo Player error:', err);
                     });
                 });
             });
 
-            // Smooth Close animation logic
             const closeLightbox = () => {
                 lightboxContainer.classList.remove("scale-100", "opacity-100");
                 lightboxContainer.classList.add("scale-95", "opacity-0");
@@ -604,48 +505,43 @@
                 setTimeout(() => {
                     lightbox.classList.remove("opacity-100");
                     lightbox.classList.add("opacity-0", "pointer-events-none");
-                    // Important: Reset iframe source to completely kill sound/video instantly on close
-                    lightboxIframe.src = "";
+                    lightboxIframe.src = ""; // Complete video & sound kill
                 }, 250);
             };
 
             closeBtn.addEventListener("click", closeLightbox);
             
-            // Close by tapping outer dark blurred area (excluding actual video and subtitle text)
             lightbox.addEventListener("click", (e) => {
                 if (!e.target.closest('.aspect-video') && !e.target.closest('.mt-4') && !closeBtn.contains(e.target)) {
                     closeLightbox();
                 }
             });
 
-            // Close on ESC key press
             document.addEventListener("keydown", (e) => {
                 if (e.key === "Escape" && !lightbox.classList.contains("pointer-events-none")) {
                     closeLightbox();
                 }
             });
 
-            // Click to Copy Logic with stopPropagation
+            // Click to Copy Logic
             const copyTriggers = document.querySelectorAll(".copy-trigger");
             
             copyTriggers.forEach(trigger => {
                 trigger.addEventListener("click", (e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // Prevents the outer link redirection
+                    e.stopPropagation();
                     
                     const valueToCopy = trigger.getAttribute("data-copy");
                     const labelId = trigger.getAttribute("data-label");
                     const defaultLabel = trigger.getAttribute("data-default");
                     const labelElement = document.getElementById(labelId);
                     
-                    // Copy action using standard Clipboard API
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(valueToCopy)
                             .then(() => {
                                 triggerLabelCopied(labelElement, defaultLabel);
                             })
                             .catch(err => {
-                                console.error('Clipboard write error, falling back:', err);
                                 fallbackCopyAction(valueToCopy, labelElement, defaultLabel);
                             });
                     } else {
@@ -654,23 +550,21 @@
                 });
             });
 
-            // Green "COPIED" visual feedback trigger
             function triggerLabelCopied(element, defaultText) {
                 if (!element) return;
                 element.textContent = "// COPIED!";
-                element.style.color = "#10B981"; // Emerald green
+                element.style.color = "#10B981";
                 
                 setTimeout(() => {
                     element.textContent = defaultText;
-                    element.style.color = ""; // Revert to zinc-500
+                    element.style.color = "";
                 }, 1500);
             }
 
-            // Fallback for older browsers or restricted WebViews
             function fallbackCopyAction(text, element, defaultText) {
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
-                textArea.style.position = "fixed"; // Prevents screen jump
+                textArea.style.position = "fixed";
                 document.body.appendChild(textArea);
                 textArea.focus();
                 textArea.select();
@@ -678,7 +572,7 @@
                     document.execCommand('copy');
                     triggerLabelCopied(element, defaultText);
                 } catch (err) {
-                    console.error('Fallback copy action failed:', err);
+                    console.error('Copy fallback issue:', err);
                 }
                 document.body.removeChild(textArea);
             }
