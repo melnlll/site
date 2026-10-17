@@ -2,570 +2,608 @@
 <html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>MELNLLL // VFX, CGI & Video Editing</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Space Grotesk, Syne -->
+    
+    <!-- Google Fonts: Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
             background-color: #050505;
             color: #f4f4f5;
             overflow-x: hidden;
         }
 
-        /* 10mm Lens Inverted Optics Distortion Background Grid */
-        .grid-bg {
+        /* Аппаратно-ускоренный кинематографичный фон */
+        .cinema-bg {
             position: fixed;
             inset: 0;
-            opacity: 0.07;
-            filter: blur(0.6px);
-            -webkit-filter: blur(0.6px);
+            background: 
+                radial-gradient(circle at center, rgba(5,5,5,0.45) 0%, rgba(5,5,5,0.92) 80%),
+                linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.95) 100%),
+                url('Thumbnail.webp') center / cover no-repeat;
             pointer-events: none;
-            z-index: -1;
+            z-index: -2;
             transform: translateZ(0);
             will-change: transform;
         }
 
-        /* Radial lens focus blur (disabled on small screens for 60/120fps smooth scrolling) */
-        .lens-blur {
+        /* Векторная оптическая сетка */
+        .grid-overlay {
             position: fixed;
             inset: 0;
+            opacity: 0.08;
             pointer-events: none;
             z-index: -1;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            mask-image: radial-gradient(circle, transparent 45%, black 100%);
-            -webkit-mask-image: radial-gradient(circle, transparent 45%, black 100%);
             transform: translateZ(0);
         }
 
-        @media (max-width: 768px) {
-            .lens-blur {
-                display: none;
-            }
-        }
-
-        /* Vignette overlay */
-        .lens-vignette {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, transparent 40%, rgba(5, 5, 5, 0.85) 100%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Dark Glassmorphism Cards */
-        .y2k-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+        /* Карточки Dark Glassmorphism */
+        .glass-panel {
+            background: rgba(14, 14, 18, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 4px 30px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0px rgba(255, 255, 255, 0.05);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.35s ease, 
-                        box-shadow 0.35s ease;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @media (hover: hover) {
-            .y2k-card:hover {
-                transform: translateY(-3px);
-                border-color: rgba(255, 255, 255, 0.2);
-                background: rgba(255, 255, 255, 0.04);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            }
-        }
-
-        /* Aluminum Design Buttons */
-        .modern-chrome-btn {
+        /* Кнопки в металлическом стиле */
+        .chrome-btn {
             position: relative;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 10px 25px -5px rgba(0, 0, 0, 0.3), 
-                inset 0 1px 0px rgba(255, 255, 255, 0.05);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
             touch-action: manipulation;
         }
 
-        .modern-chrome-btn::before {
+        .chrome-btn::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             transform: translateX(-100%);
-            transition: none;
         }
 
         @media (hover: hover) {
-            .modern-chrome-btn:hover::before {
+            .chrome-btn:hover::before {
                 transform: translateX(100%);
                 transition: transform 0.75s ease-in-out;
             }
-
-            .modern-chrome-btn:hover {
+            .chrome-btn:hover {
                 transform: translateY(-2px);
                 border-color: rgba(255, 255, 255, 0.25);
-                box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.5);
+            }
+            .glass-panel:hover {
+                border-color: rgba(255, 255, 255, 0.18);
             }
         }
 
-        .modern-chrome-btn:active {
+        .chrome-btn:active {
             transform: scale(0.98);
         }
 
-        /* Pulse for online status */
+        /* Индикатор доступности */
         .pulse-dot {
             width: 8px;
             height: 8px;
             background-color: #10B981;
             border-radius: 50%;
-            display: inline-block;
             box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 1.6s infinite;
+            animation: pulse-fx 1.8s infinite;
         }
 
-        @keyframes pulse {
+        @keyframes pulse-fx {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* Custom dark scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
+        /* Карусель */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
         }
-        ::-webkit-scrollbar-track {
-            background: #09090b;
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            width: 100%;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f46;
-        }
+
+        /* Кастомный тонкий скроллбар */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between py-6 sm:py-8 px-0">
 
-    <!-- 10mm Lens Vector Optics Grid -->
-    <div class="grid-bg">
-        <svg class="w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="0.5">
-            <path d="M 5 0 Q 144 500 5 1000" /><path d="M 35 0 Q 165 500 35 1000" /><path d="M 65 0 Q 187 500 65 1000" /><path d="M 95 0 Q 208 500 95 1000" /><path d="M 125 0 Q 230 500 125 1000" /><path d="M 155 0 Q 252 500 155 1000" /><path d="M 185 0 Q 273 500 185 1000" /><path d="M 215 0 Q 295 500 215 1000" /><path d="M 245 0 Q 316 500 245 1000" /><path d="M 275 0 Q 338 500 275 1000" /><path d="M 305 0 Q 360 500 305 1000" /><path d="M 335 0 Q 381 500 335 1000" /><path d="M 365 0 Q 403 500 365 1000" /><path d="M 395 0 Q 424 500 395 1000" /><path d="M 425 0 Q 446 500 425 1000" /><path d="M 455 0 Q 468 500 455 1000" /><path d="M 485 0 Q 489 500 485 1000" />
-            <path d="M 515 0 Q 511 500 515 1000" /><path d="M 545 0 Q 532 500 545 1000" /><path d="M 575 0 Q 554 500 575 1000" /><path d="M 605 0 Q 576 500 605 1000" /><path d="M 635 0 Q 597 500 635 1000" /><path d="M 665 0 Q 619 500 665 1000" /><path d="M 695 0 Q 640 500 695 1000" /><path d="M 725 0 Q 662 500 725 1000" /><path d="M 755 0 Q 684 500 755 1000" /><path d="M 785 0 Q 705 500 785 1000" /><path d="M 815 0 Q 727 500 815 1000" /><path d="M 845 0 Q 748 500 845 1000" /><path d="M 875 0 Q 770 500 875 1000" /><path d="M 905 0 Q 792 500 905 1000" /><path d="M 935 0 Q 813 500 935 1000" /><path d="M 965 0 Q 835 500 965 1000" /><path d="M 995 0 Q 856 500 995 1000" />
-            <path d="M 0 5 Q 500 144 1000 5" /><path d="M 0 35 Q 500 165 1000 35" /><path d="M 0 65 Q 500 187 1000 65" /><path d="M 0 95 Q 500 208 1000 95" /><path d="M 0 125 Q 500 230 1000 125" /><path d="M 0 155 Q 500 252 1000 155" /><path d="M 0 185 Q 500 273 1000 185" /><path d="M 0 215 Q 500 295 1000 215" /><path d="M 0 245 Q 500 316 1000 245" /><path d="M 0 275 Q 500 338 1000 275" /><path d="M 0 305 Q 500 360 1000 305" /><path d="M 0 335 Q 500 381 1000 335" /><path d="M 0 365 Q 500 403 1000 365" /><path d="M 0 395 Q 500 424 1000 395" /><path d="M 0 425 Q 500 446 1000 425" /><path d="M 0 455 Q 500 468 1000 455" /><path d="M 0 485 Q 500 489 1000 485" />
-            <path d="M 0 515 Q 500 511 1000 515" /><path d="M 0 545 Q 500 532 1000 545" /><path d="M 0 575 Q 500 554 1000 575" /><path d="M 0 605 Q 500 576 1000 605" /><path d="M 0 635 Q 500 597 1000 635" /><path d="M 0 665 Q 500 619 1000 665" /><path d="M 0 695 Q 500 640 1000 695" /><path d="M 0 725 Q 500 662 1000 725" /><path d="M 0 755 Q 500 684 1000 755" /><path d="M 0 785 Q 500 705 1000 785" /><path d="M 0 815 Q 500 727 1000 815" /><path d="M 0 845 Q 500 748 1000 845" /><path d="M 0 875 Q 500 770 1000 875" /><path d="M 0 905 Q 500 792 1000 905" /><path d="M 0 935 Q 500 813 1000 935" /><path d="M 0 965 Q 500 835 1000 965" /><path d="M 0 995 Q 500 856 1000 995" />
+<body class="min-h-screen flex flex-col justify-between py-6 sm:py-8 px-0 selection:bg-zinc-800 selection:text-white">
+
+    <!-- Фоновое изображение -->
+    <div class="cinema-bg"></div>
+
+    <!-- Векторная сетка Y2K -->
+    <div class="grid-overlay">
+        <svg class="w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="0.5">
+            <path d="M 5 0 Q 144 500 5 1000" /><path d="M 65 0 Q 187 500 65 1000" /><path d="M 125 0 Q 230 500 125 1000" /><path d="M 185 0 Q 273 500 185 1000" /><path d="M 245 0 Q 316 500 245 1000" /><path d="M 305 0 Q 360 500 305 1000" /><path d="M 365 0 Q 403 500 365 1000" /><path d="M 425 0 Q 446 500 425 1000" /><path d="M 485 0 Q 489 500 485 1000" />
+            <path d="M 515 0 Q 511 500 515 1000" /><path d="M 575 0 Q 554 500 575 1000" /><path d="M 635 0 Q 597 500 635 1000" /><path d="M 695 0 Q 640 500 695 1000" /><path d="M 755 0 Q 684 500 755 1000" /><path d="M 815 0 Q 727 500 815 1000" /><path d="M 875 0 Q 770 500 875 1000" /><path d="M 935 0 Q 813 500 935 1000" /><path d="M 995 0 Q 856 500 995 1000" />
+            <path d="M 0 5 Q 500 144 1000 5" /><path d="M 0 65 Q 500 187 1000 65" /><path d="M 0 125 Q 500 230 1000 125" /><path d="M 0 185 Q 500 273 1000 185" /><path d="M 0 245 Q 500 316 1000 245" /><path d="M 0 305 Q 500 360 1000 305" /><path d="M 0 365 Q 500 403 1000 365" /><path d="M 0 425 Q 500 446 1000 425" /><path d="M 0 485 Q 500 489 1000 485" />
+            <path d="M 0 515 Q 500 511 1000 515" /><path d="M 0 575 Q 500 554 1000 575" /><path d="M 0 635 Q 500 597 1000 635" /><path d="M 0 695 Q 500 640 1000 695" /><path d="M 0 755 Q 500 684 1000 755" /><path d="M 0 815 Q 500 727 1000 815" /><path d="M 0 875 Q 500 770 1000 875" /><path d="M 0 935 Q 500 813 1000 935" /><path d="M 0 995 Q 500 856 1000 995" />
         </svg>
     </div>
 
-    <!-- Radial Lens Blur Overlay -->
-    <div class="lens-blur"></div>
-
-    <!-- Authentic Lens Vignette Shadow Overlay -->
-    <div class="lens-vignette"></div>
-
-    <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 bg-[#050505] z-[9999] flex items-center justify-center transition-opacity duration-500 ease-out select-none">
-        <div class="relative flex flex-col items-center justify-center">
-            <div id="intro-box" class="w-[12px] h-[12px] bg-black transition-transform duration-300 overflow-hidden"></div>
-            <div id="loading-text" class="absolute font-mono text-xs sm:text-sm tracking-[0.25em] text-white opacity-0 transition-opacity duration-75 uppercase">// 100%</div>
+    <!-- Быстрый и чистый Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-[#050505] z-[9999] flex items-center justify-center transition-opacity duration-300 pointer-events-auto select-none">
+        <div class="flex flex-col items-center gap-3">
+            <div id="intro-box" class="w-3.5 h-3.5 bg-white transition-transform duration-200"></div>
+            <div class="font-mono text-xs tracking-[0.25em] text-zinc-400 uppercase">// MELNLLL</div>
         </div>
     </div>
 
-    <!-- Main Content Wrapper -->
-    <div id="main-content" class="opacity-0 transition-opacity duration-700 ease-out flex-grow flex flex-col justify-between">
+    <!-- Основной контейнер контента -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-500 flex-grow flex flex-col justify-between">
         
-        <!-- Top Navigation Area -->
-        <header class="w-full px-4 sm:px-10 lg:px-16 flex flex-row justify-between items-center sm:items-start gap-2 mb-8 sm:mb-12">
-            <div class="flex flex-col items-start gap-1">
-                <a href="#portfolio" class="text-[11px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors py-0.5">
+        <!-- Header -->
+        <header class="w-full px-4 sm:px-10 lg:px-16 flex flex-row justify-between items-center sm:items-start gap-2 mb-6 sm:mb-10">
+            <nav class="flex flex-col items-start gap-1">
+                <a href="#portfolio" class="text-[11px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase hover:text-white transition-colors py-0.5">
                     // ART PORTFOLIO
                 </a>
-                <a href="#contact" class="text-[11px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] font-bold text-zinc-400 uppercase hover:text-white transition-colors py-0.5">
+                <a href="#contact" class="text-[11px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase hover:text-white transition-colors py-0.5">
                     // CONTACT
                 </a>
-            </div>
-            <div class="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm whitespace-nowrap">
+            </nav>
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 text-[10px] sm:text-xs font-medium text-zinc-300 shadow-sm backdrop-blur-md whitespace-nowrap">
                 <span class="pulse-dot"></span>
                 <span>AVAILABLE FOR WORK 2026</span>
             </div>
         </header>
 
-        <!-- Main Workspace Container -->
-        <main class="max-w-7xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8 lg:px-12">
+        <!-- Main Workspace -->
+        <main class="max-w-6xl w-full mx-auto flex-grow flex flex-col justify-center px-4 sm:px-8">
             
-            <!-- Hero / Description Block -->
-            <section class="text-center mb-12 sm:mb-16 relative py-6 sm:py-10 flex flex-col items-center justify-center select-none">
-                <div class="flex flex-col items-center w-full">
-                    <p class="text-[10px] min-[375px]:text-xs sm:text-sm md:text-base tracking-[0.16em] sm:tracking-[0.25em] text-zinc-400 font-extrabold uppercase mb-5 sm:mb-6 text-center">
-                        [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
-                    </p>
-                    
-                    <!-- Tags / Services List -->
-                    <div class="flex flex-wrap justify-center gap-1.5 sm:gap-3 md:gap-4 max-w-4xl mx-auto px-2">
-                        <span class="px-2.5 sm:px-3.5 py-1 text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 font-mono">[COMPOSITING]</span>
-                        <span class="px-2.5 sm:px-3.5 py-1 text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 font-mono">[3D ART]</span>
-                        <span class="px-2.5 sm:px-3.5 py-1 text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 font-mono">[CAMERA TRACKING]</span>
-                        <span class="px-2.5 sm:px-3.5 py-1 text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 font-mono">[ROTO & CLEANUP]</span>
-                        <span class="px-2.5 sm:px-3.5 py-1 text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm border border-white/10 rounded-full text-zinc-400 bg-white/5 font-mono">[VIDEO EDITING]</span>
-                    </div>
+            <!-- Hero / Description -->
+            <section class="text-center mb-8 sm:mb-12 py-4 select-none">
+                <h1 class="text-[11px] min-[375px]:text-xs sm:text-sm md:text-base tracking-[0.2em] text-zinc-300 font-extrabold uppercase mb-4 sm:mb-6 drop-shadow">
+                    [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
+                </h1>
+                
+                <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2.5 max-w-3xl mx-auto">
+                    <span class="px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs border border-white/10 rounded-full text-zinc-300 bg-black/35 backdrop-blur-md font-mono">[COMPOSITING]</span>
+                    <span class="px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs border border-white/10 rounded-full text-zinc-300 bg-black/35 backdrop-blur-md font-mono">[3D ART]</span>
+                    <span class="px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs border border-white/10 rounded-full text-zinc-300 bg-black/35 backdrop-blur-md font-mono">[CAMERA TRACKING]</span>
+                    <span class="px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs border border-white/10 rounded-full text-zinc-300 bg-black/35 backdrop-blur-md font-mono">[ROTO & CLEANUP]</span>
+                    <span class="px-2.5 sm:px-3 py-1 text-[9px] sm:text-xs border border-white/10 rounded-full text-zinc-300 bg-black/35 backdrop-blur-md font-mono">[AI-ASSISTED VFX]</span>
                 </div>
             </section>
 
-            <!-- Video Portfolio Section -->
-            <section id="portfolio" class="mb-16 sm:mb-20 scroll-mt-20">
-                <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase text-center mb-8 sm:mb-12">// SELECTED WORK SHOWCASE</h2>
+            <!-- Video Portfolio Carousel -->
+            <section id="portfolio" class="mb-12 sm:mb-16 scroll-mt-20 max-w-4xl mx-auto w-full">
                 
-                <div class="grid grid-cols-1 gap-10 sm:gap-16 md:gap-20 max-w-6xl mx-auto w-full">
-                    
-                    <!-- Video 1 (Compositing Reel 2026) -->
-                    <div class="y2k-card p-3 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col justify-between">
-                        <div>
-                            <div class="video-card-wrapper aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 shadow-inner relative group cursor-pointer" 
+                <!-- Controls Header -->
+                <div class="flex items-center justify-between mb-3 sm:mb-4 px-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
+                        <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 03</span>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <button id="prev-slide" aria-label="Previous Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button id="next-slide" aria-label="Next Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Carousel Container -->
+                <div class="overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 shadow-2xl relative" id="carousel-viewport">
+                    <div class="carousel-track" id="carousel-track">
+                        
+                        <!-- SLIDE 1: L'INSOUMISE -->
+                        <div class="carousel-slide p-3 sm:p-5 glass-panel">
+                            <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
+                                 data-video-id="1236726845" 
+                                 data-title="L'Insoumise: Perfume Commercial (Personal Project)" 
+                                 data-meta="Concept Commercial &bull; AI-Assisted VFX &bull; 2026">
+                                
+                                <img src="Thumbnail.webp" alt="L'Insoumise Perfume Commercial" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                                <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
+                                    <span class="px-2.5 py-0.5 text-[9px] sm:text-[10px] font-mono uppercase bg-black/70 backdrop-blur-md text-emerald-400 border border-emerald-500/30 rounded-full tracking-wider">
+                                        // NEW WORK
+                                    </span>
+                                </div>
+
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-xl">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+
+                                <!-- Описание проекта для лайтбокса -->
+                                <div class="project-desc hidden">
+                                    <div class="space-y-4 text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed">
+                                        <div class="flex flex-wrap items-center gap-1.5 pb-1">
+                                            <span class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 font-mono text-[10px] text-zinc-300 uppercase">Personal Project</span>
+                                            <span class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 font-mono text-[10px] text-zinc-300 uppercase">Concept Commercial</span>
+                                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 font-mono text-[10px] text-emerald-400 uppercase">AI-Assisted VFX</span>
+                                        </div>
+
+                                        <p class="text-zinc-300/95 leading-normal">
+                                            <strong class="text-white font-medium">L'Insoumise</strong> is a self-initiated concept commercial for a fictional perfume. It is not a client job and not a real product. Inspired by the high-energy 2000s pop-culture ads (like the Britney Spears Pepsi spot) and the visual style of Ilya Naishuller.
+                                        </p>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
+                                            <div>
+                                                <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1">// MY ROLE</h5>
+                                                <p class="text-zinc-300">Complete end-to-end execution: Concept, story, previz, generation, compositing and cleanup.</p>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1">// SKILLS SHOWN</h5>
+                                                <div class="flex flex-wrap gap-1 mt-1 font-mono text-[10px] text-zinc-300">
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Compositing</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Previz</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">AI-assisted production</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Storytelling</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="pt-3 border-t border-white/10">
+                                            <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1.5">// PIPELINE</h5>
+                                            <ul class="space-y-1 font-mono text-[11px] sm:text-xs text-zinc-400">
+                                                <li>&bull; <strong class="text-zinc-200">Blender:</strong> rough blockout and camera previz</li>
+                                                <li>&bull; <strong class="text-zinc-200">Flux (ComfyUI):</strong> locations and characters</li>
+                                                <li>&bull; <strong class="text-zinc-200">Seedance:</strong> AI video generation guided by the previz</li>
+                                                <li>&bull; <strong class="text-zinc-200">Post-Production:</strong> Compositing and cleanup</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-start mt-3 sm:mt-4">
+                                <div>
+                                    <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">L'Insoumise: Perfume Commercial</h2>
+                                    <p class="text-xs text-zinc-400 font-mono mt-0.5">Concept Commercial &bull; AI-Assisted VFX &bull; 2026</p>
+                                </div>
+                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">NEW</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 2: COMPOSITING REEL -->
+                        <div class="carousel-slide p-3 sm:p-5 glass-panel">
+                            <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1218202467" 
-                                 data-video-title="Compositing Reel 2026" 
-                                 data-video-subtitle="ID: 1218202467 &bull; CG Integration, Paint &amp; Prep, Rotoscoping">
+                                 data-title="Compositing Reel 2026" 
+                                 data-meta="ID: 1218202467 &bull; CG Integration, Paint & Prep, Rotoscoping">
                                 
-                                <!-- Mobile Static UI Placeholder -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 to-zinc-900 flex items-center justify-center md:hidden">
-                                    <span class="text-[10px] font-mono tracking-widest text-zinc-500">// TAP TO PLAY</span>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center">
+                                    <span class="text-[10px] font-mono tracking-widest text-zinc-500">// SHOWREEL 2026</span>
                                 </div>
 
-                                <!-- Desktop Silent Video Loop -->
-                                <iframe 
-                                    src="https://player.vimeo.com/video/1218202467?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
-                                    frameborder="0" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01] hidden md:block" 
-                                    title="Compositing Reel Preview Loop"
-                                    loading="lazy">
-                                </iframe>
-                                
-                                <!-- Glassmorphic Play Button -->
-                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
-                                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-lg">
-                                        <svg class="w-5 h-5 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-xl">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+
+                                <div class="project-desc hidden">
+                                    <div class="space-y-3 text-xs sm:text-sm text-zinc-300">
+                                        <p class="text-zinc-300/90 leading-relaxed">
+                                            Feature and commercial compositing reel focusing on live-action CG integration, rig removal, complex multi-layer rotoscoping, clean plating and photoreal color science.
+                                        </p>
+                                        <div class="pt-2 border-t border-white/10 font-mono text-[11px] text-zinc-400">
+                                            <span class="text-zinc-200">Tools:</span> Nuke, After Effects, Mocha Pro.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-base sm:text-xl font-bold mt-3 sm:mt-4 tracking-tight text-zinc-100">Compositing Reel 2026</h3>
-                            <p class="text-xs sm:text-sm text-zinc-400 mt-0.5 sm:mt-1 font-mono">ID: 1218202467 &bull; CG Integration, Paint &amp; Prep, Rotoscoping</p>
+                            
+                            <div class="mt-3 sm:mt-4">
+                                <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">Compositing Reel 2026</h2>
+                                <p class="text-xs text-zinc-400 font-mono mt-0.5">CG Integration, Paint &amp; Prep, Rotoscoping</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Video 2 (VFX Reel 2026 - VFX, Animation, Tracking) -->
-                    <div class="y2k-card p-3 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col justify-between">
-                        <div>
-                            <div class="video-card-wrapper aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 shadow-inner relative group cursor-pointer" 
+                        <!-- SLIDE 3: VFX REEL -->
+                        <div class="carousel-slide p-3 sm:p-5 glass-panel">
+                            <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1122784946" 
-                                 data-video-title="VFX Reel 2026" 
-                                 data-video-subtitle="ID: 1122784946 &bull; VFX, Animation, Tracking">
+                                 data-title="VFX Reel 2026" 
+                                 data-meta="ID: 1122784946 &bull; VFX, Animation, Tracking">
                                 
-                                <!-- Mobile Static UI Placeholder -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 to-zinc-900 flex items-center justify-center md:hidden">
-                                    <span class="text-[10px] font-mono tracking-widest text-zinc-500">// TAP TO PLAY</span>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center">
+                                    <span class="text-[10px] font-mono tracking-widest text-zinc-500">// VFX & 3D REEL</span>
                                 </div>
 
-                                <!-- Desktop Silent Video Loop -->
-                                <iframe 
-                                    src="https://player.vimeo.com/video/1122784946?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;playsinline=1" 
-                                    frameborder="0" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    class="absolute top-0 left-0 w-full h-full pointer-events-none scale-[1.01] hidden md:block" 
-                                    title="VFX Reel Preview Loop"
-                                    loading="lazy">
-                                </iframe>
-                                
-                                <!-- Glassmorphic Play Button -->
-                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
-                                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-lg">
-                                        <svg class="w-5 h-5 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-xl">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+
+                                <div class="project-desc hidden">
+                                    <div class="space-y-3 text-xs sm:text-sm text-zinc-300">
+                                        <p class="text-zinc-300/90 leading-relaxed">
+                                            Selected VFX works demonstrating 3D camera matchmoving, dynamics, particle FX and procedural environment placement.
+                                        </p>
+                                        <div class="pt-2 border-t border-white/10 font-mono text-[11px] text-zinc-400">
+                                            <span class="text-zinc-200">Tools:</span> Blender, Houdini, Cinema 4D.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-base sm:text-xl font-bold mt-3 sm:mt-4 tracking-tight text-zinc-100">VFX Reel 2026</h3>
-                            <p class="text-xs sm:text-sm text-zinc-400 mt-0.5 sm:mt-1 font-mono">ID: 1122784946 &bull; VFX, Animation, Tracking</p>
+                            
+                            <div class="mt-3 sm:mt-4">
+                                <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">VFX Reel 2026</h2>
+                                <p class="text-xs text-zinc-400 font-mono mt-0.5">VFX, Animation, Tracking</p>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
+                </div>
+
+                <!-- Пагинация точками -->
+                <div class="flex justify-center items-center gap-2 mt-4" id="carousel-dots">
+                    <button class="w-6 h-1 rounded-full bg-white transition-all duration-300" data-index="0" aria-label="Slide 1"></button>
+                    <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="1" aria-label="Slide 2"></button>
+                    <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="2" aria-label="Slide 3"></button>
                 </div>
             </section>
 
-            <!-- Contact / Action Section -->
-            <section id="contact" class="max-w-3xl mx-auto w-full text-center mb-10 sm:mb-12 scroll-mt-20">
-                <h2 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-500 uppercase mb-6 sm:mb-8">// CONNECT / START PROJECT</h2>
+            <!-- Contact Section -->
+            <section id="contact" class="max-w-xl mx-auto w-full text-center mb-10 sm:mb-12 scroll-mt-20">
+                <h3 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-400 uppercase mb-4 sm:mb-6">// CONNECT / START PROJECT</h3>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2 sm:px-4">
-                    
-                    <!-- Telegram Card -->
-                    <div class="modern-chrome-btn p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group min-h-[72px] sm:min-h-[80px] relative select-none">
-                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 py-1" data-copy="@ddsblf" data-label="telegram-label" data-default="// TELEGRAM">
-                            <span id="telegram-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// TELEGRAM</span>
-                            <span class="text-sm sm:text-base font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors">@ddsblf</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 px-1">
+                    <!-- Telegram -->
+                    <div class="chrome-btn p-4 rounded-xl flex items-center justify-between gap-3 group min-h-[68px] select-none">
+                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 py-1" data-copy="@ddsblf" data-label="tg-label" data-default="// TELEGRAM">
+                            <span id="tg-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-colors">// TELEGRAM</span>
+                            <span class="text-sm font-bold tracking-tight text-zinc-200 mt-0.5 group-hover:text-white transition-colors">@ddsblf</span>
                         </div>
-                        <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram" class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10 active:scale-90">
-                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                            </svg>
+                        <a href="https://t.me/ddsblf" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10 active:scale-90">
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                     </div>
 
-                    <!-- Email Card -->
-                    <div class="modern-chrome-btn p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group min-h-[72px] sm:min-h-[80px] relative min-w-0 select-none">
-                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 min-w-0 py-1" data-copy="langi.staff1@gmail.com" data-label="email-label" data-default="// E-MAIL">
-                            <span id="email-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-all duration-300">// E-MAIL</span>
-                            <span class="text-xs sm:text-sm font-bold tracking-tight text-zinc-200 mt-0.5 hover:text-white transition-colors truncate max-w-full">langi.staff1@gmail.com</span>
+                    <!-- Email -->
+                    <div class="chrome-btn p-4 rounded-xl flex items-center justify-between gap-3 group min-h-[68px] select-none min-w-0">
+                        <div class="copy-trigger flex flex-col items-start text-left cursor-pointer z-10 min-w-0 py-1" data-copy="langi.staff1@gmail.com" data-label="em-label" data-default="// E-MAIL">
+                            <span id="em-label" class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase transition-colors">// E-MAIL</span>
+                            <span class="text-xs sm:text-sm font-bold tracking-tight text-zinc-200 mt-0.5 group-hover:text-white transition-colors truncate max-w-full">langi.staff1@gmail.com</span>
                         </div>
-                        <a href="mailto:langi.staff1@gmail.com" aria-label="Send Email" class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10 active:scale-90">
-                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                            </svg>
+                        <a href="mailto:langi.staff1@gmail.com" aria-label="Send Email" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all flex-shrink-0 hover:bg-white text-zinc-300 hover:text-black z-10 active:scale-90">
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                     </div>
-
                 </div>
             </section>
 
         </main>
 
         <!-- Footer -->
-        <footer class="w-full border-t border-zinc-900/80 pt-6 mt-8 px-4 sm:px-12 flex justify-center items-center text-center">
-            <span class="text-[10px] sm:text-xs font-mono text-zinc-500">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</span>
+        <footer class="w-full border-t border-white/5 pt-6 px-4 text-center">
+            <p class="text-[10px] sm:text-xs font-mono text-zinc-500">&copy; 2026 MELNLLL. ALL RIGHTS RESERVED.</p>
         </footer>
 
     </div>
 
-    <!-- Cinematic Theater Lightbox Overlay -->
-    <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/85 backdrop-blur-md flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 ease-out px-3 sm:px-6">
-        <button id="close-lightbox" aria-label="Close Lightbox" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 group transition-colors focus:outline-none p-2">
+    <!-- Cinematic Lightbox -->
+    <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-300 ease-out py-6 sm:py-10 px-3 sm:px-6 flex justify-center items-start">
+        
+        <!-- Кнопка закрытия с поддержкой Safe-Area на iPhone -->
+        <button id="close-lightbox" aria-label="Close Lightbox" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 transition-colors p-2 z-50">
             <span class="hidden min-[420px]:inline">[ CLOSE ]</span>
-            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/50 group-hover:bg-white/10 active:scale-95 transition-all duration-200">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-black/40 hover:bg-white hover:text-black active:scale-95 transition-all">
+                <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"/></svg>
             </span>
         </button>
         
-        <div id="lightbox-container" class="w-full max-w-5xl transform scale-95 opacity-0 transition-all duration-300 ease-out">
-            <div class="aspect-video w-full rounded-xl sm:rounded-3xl overflow-hidden bg-black border border-white/10 shadow-2xl relative">
-                <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" class="absolute top-0 left-0 w-full h-full"></iframe>
+        <div id="lightbox-container" class="w-full max-w-4xl my-auto transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <div class="aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl relative">
+                <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
-            <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-2 px-1 text-left">
-                <div>
-                    <h4 id="lightbox-title" class="text-white text-sm sm:text-lg font-bold tracking-tight">Reel</h4>
-                    <p id="lightbox-subtitle" class="text-zinc-400 text-[10px] sm:text-xs font-mono mt-0.5"></p>
+
+            <!-- Блок описания (черный полупрозрачный фон + серо-белый текст) -->
+            <div class="mt-4 p-5 sm:p-7 rounded-xl sm:rounded-2xl bg-black/75 backdrop-blur-xl border border-white/10 shadow-2xl text-left">
+                <div class="pb-3 border-b border-white/10">
+                    <h3 id="lightbox-title" class="text-white text-base sm:text-xl font-bold tracking-tight"></h3>
+                    <p id="lightbox-subtitle" class="text-zinc-400 text-[11px] sm:text-xs font-mono mt-1"></p>
                 </div>
+                
+                <div id="lightbox-desc" class="mt-4"></div>
             </div>
         </div>
     </div>
 
-    <!-- Vimeo SDK for Playback Controls -->
+    <!-- Vimeo SDK -->
     <script src="https://player.vimeo.com/api/player.js"></script>
 
-    <!-- Scripts -->
+    <!-- Оптимизированный JS -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const introBox = document.getElementById("intro-box");
+            // Элементы
             const preloader = document.getElementById("preloader");
+            const introBox = document.getElementById("intro-box");
             const mainContent = document.getElementById("main-content");
-            const loadingText = document.getElementById("loading-text");
-            
             const lightbox = document.getElementById("video-lightbox");
             const lightboxContainer = document.getElementById("lightbox-container");
             const lightboxIframe = document.getElementById("lightbox-iframe");
             const lightboxTitle = document.getElementById("lightbox-title");
             const lightboxSubtitle = document.getElementById("lightbox-subtitle");
+            const lightboxDesc = document.getElementById("lightbox-desc");
             const closeBtn = document.getElementById("close-lightbox");
-            const videoCards = document.querySelectorAll(".video-card-wrapper");
-            
-            // Glitch Box Sequence
-            const frames = [
-                '#000000', '#ffffff', 'repeating-linear-gradient(45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)',
-                '#000000', 'repeating-linear-gradient(-45deg, #000 0px, #000 2px, #fff 2px, #fff 4px)', '#ffffff',
-                'radial-gradient(circle, #000 20%, #fff 60%)', '#000000', 'conic-gradient(#000, #fff, #000)',
-                '#ffffff', 'repeating-radial-gradient(circle, #000 0px, #000 1px, #fff 1px, #fff 2px)'
-            ];
-            
-            let frameIndex = 0;
-            const interval = setInterval(() => {
+
+            let vimeoPlayer = null;
+
+            // 1. Быстрый и чистый старт
+            let pulseCount = 0;
+            const pulseTimer = setInterval(() => {
                 if (introBox) {
-                    introBox.style.background = frames[frameIndex % frames.length];
-                    frameIndex++;
+                    introBox.style.transform = pulseCount % 2 === 0 ? "scale(1.4)" : "scale(0.8)";
+                    pulseCount++;
                 }
-            }, 45);
+            }, 120);
 
             setTimeout(() => {
-                clearInterval(interval);
-                if (introBox) introBox.style.display = 'none';
-                
-                if (loadingText) {
-                    loadingText.classList.remove('opacity-0');
-                    loadingText.classList.add('opacity-100');
-                    
-                    setTimeout(() => {
-                        loadingText.classList.remove('opacity-100');
-                        loadingText.classList.add('opacity-0');
-                        
-                        setTimeout(() => {
-                            loadingText.classList.remove('opacity-0');
-                            loadingText.classList.add('opacity-100');
-                            
-                            setTimeout(() => {
-                                loadingText.classList.remove('opacity-100');
-                                loadingText.classList.add('opacity-0');
-                                
-                                setTimeout(() => {
-                                    loadingText.classList.remove('opacity-0');
-                                    loadingText.classList.add('opacity-100');
-                                    
-                                    setTimeout(() => {
-                                        if (preloader) {
-                                            preloader.style.opacity = '0';
-                                            preloader.style.pointerEvents = 'none';
-                                        }
-                                        if (mainContent) {
-                                            mainContent.classList.remove('opacity-0');
-                                            mainContent.classList.add('opacity-100');
-                                        }
-                                    }, 300);
-                                }, 100);
-                            }, 100);
-                        }, 100);
-                    }, 180);
-                }
-            }, 1000);
+                clearInterval(pulseTimer);
+                preloader.style.opacity = '0';
+                preloader.style.pointerEvents = 'none';
+                mainContent.style.opacity = '1';
+                setTimeout(() => preloader.remove(), 350);
+            }, 600);
 
-            // Lightbox interactions
-            videoCards.forEach(card => {
+            // 2. Логика карусели
+            const track = document.getElementById("carousel-track");
+            const slides = document.querySelectorAll(".carousel-slide");
+            const prevBtn = document.getElementById("prev-slide");
+            const nextBtn = document.getElementById("next-slide");
+            const counter = document.getElementById("carousel-counter");
+            const dots = document.querySelectorAll("#carousel-dots button");
+            const viewport = document.getElementById("carousel-viewport");
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function updateCarousel(index) {
+                currentSlide = (index + totalSlides) % totalSlides;
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                counter.textContent = `0${currentSlide + 1} / 0${totalSlides}`;
+
+                dots.forEach((dot, idx) => {
+                    dot.className = idx === currentSlide 
+                        ? "w-6 h-1 rounded-full bg-white transition-all duration-300" 
+                        : "w-2 h-1 rounded-full bg-white/20 transition-all duration-300";
+                });
+            }
+
+            prevBtn.addEventListener("click", () => updateCarousel(currentSlide - 1));
+            nextBtn.addEventListener("click", () => updateCarousel(currentSlide + 1));
+
+            dots.forEach(dot => {
+                dot.addEventListener("click", () => updateCarousel(parseInt(dot.getAttribute("data-index"))));
+            });
+
+            // 3. Умный Touch-Swipe для мобильных (отличает скролл от свайпа)
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            viewport.addEventListener("touchstart", (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            viewport.addEventListener("touchend", (e) => {
+                const diffX = touchStartX - e.changedTouches[0].clientX;
+                const diffY = touchStartY - e.changedTouches[0].clientY;
+
+                // Срабатывает только если горизонтальное движение больше вертикального (защита от скролла)
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+                    diffX > 0 ? updateCarousel(currentSlide + 1) : updateCarousel(currentSlide - 1);
+                }
+            }, { passive: true });
+
+            // 4. Управление клавиатурой (стрелки влево/вправо)
+            document.addEventListener("keydown", (e) => {
+                if (lightbox.classList.contains("pointer-events-none")) {
+                    if (e.key === "ArrowLeft") updateCarousel(currentSlide - 1);
+                    if (e.key === "ArrowRight") updateCarousel(currentSlide + 1);
+                } else if (e.key === "Escape") {
+                    closeLightbox();
+                }
+            });
+
+            // 5. Лайтбокс и проигрывание
+            document.querySelectorAll(".video-card").forEach(card => {
                 card.addEventListener("click", () => {
                     const videoId = card.getAttribute("data-video-id");
-                    const videoTitle = card.getAttribute("data-video-title");
-                    const videoSubtitle = card.getAttribute("data-video-subtitle");
-                    
-                    lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0&badge=0&autopause=0&player_id=0&app_id=58479&playsinline=1`;
-                    lightboxTitle.textContent = videoTitle;
-                    lightboxSubtitle.textContent = videoSubtitle.replace(/&amp;/g, '&').replace('&bull;', '•');
+                    lightboxTitle.textContent = card.getAttribute("data-title");
+                    lightboxSubtitle.innerHTML = card.getAttribute("data-meta");
 
-                    // Prevent body scroll on mobile behind lightbox
+                    const descContent = card.querySelector(".project-desc");
+                    lightboxDesc.innerHTML = descContent ? descContent.innerHTML : "";
+
+                    lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0&badge=0&autopause=0&playsinline=1`;
                     document.body.style.overflow = 'hidden';
 
                     lightbox.classList.remove("opacity-0", "pointer-events-none");
                     lightbox.classList.add("opacity-100");
                     
-                    setTimeout(() => {
+                    requestAnimationFrame(() => {
                         lightboxContainer.classList.remove("scale-95", "opacity-0");
                         lightboxContainer.classList.add("scale-100", "opacity-100");
-                    }, 30);
-
-                    // Initialize Player volume
-                    const player = new Vimeo.Player(lightboxIframe);
-                    player.on('play', () => {
-                        player.setMuted(false)
-                            .then(() => player.setVolume(0.5))
-                            .catch(() => {});
                     });
+
+                    vimeoPlayer = new Vimeo.Player(lightboxIframe);
                 });
             });
 
-            const closeLightbox = () => {
+            function closeLightbox() {
                 lightboxContainer.classList.remove("scale-100", "opacity-100");
                 lightboxContainer.classList.add("scale-95", "opacity-0");
                 
                 setTimeout(() => {
                     lightbox.classList.remove("opacity-100");
                     lightbox.classList.add("opacity-0", "pointer-events-none");
+                    if (vimeoPlayer) {
+                        vimeoPlayer.unload().catch(() => {});
+                        vimeoPlayer = null;
+                    }
                     lightboxIframe.src = "";
-                    document.body.style.overflow = ''; // Restore body scroll
+                    document.body.style.overflow = '';
                 }, 200);
-            };
+            }
 
             closeBtn.addEventListener("click", closeLightbox);
-            
             lightbox.addEventListener("click", (e) => {
-                if (!e.target.closest('#lightbox-container') && !closeBtn.contains(e.target)) {
+                if (!lightboxContainer.contains(e.target) && !closeBtn.contains(e.target)) {
                     closeLightbox();
                 }
             });
 
-            document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape" && !lightbox.classList.contains("pointer-events-none")) {
-                    closeLightbox();
-                }
-            });
-
-            // Click to Copy Logic
-            const copyTriggers = document.querySelectorAll(".copy-trigger");
-            
-            copyTriggers.forEach(trigger => {
+            // 6. Быстрое копирование контактов
+            document.querySelectorAll(".copy-trigger").forEach(trigger => {
                 trigger.addEventListener("click", (e) => {
                     e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const valueToCopy = trigger.getAttribute("data-copy");
-                    const labelId = trigger.getAttribute("data-label");
-                    const defaultLabel = trigger.getAttribute("data-default");
-                    const labelElement = document.getElementById(labelId);
-                    
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(valueToCopy)
-                            .then(() => triggerLabelCopied(labelElement, defaultLabel))
-                            .catch(() => fallbackCopyAction(valueToCopy, labelElement, defaultLabel));
-                    } else {
-                        fallbackCopyAction(valueToCopy, labelElement, defaultLabel);
+                    const text = trigger.getAttribute("data-copy");
+                    const label = document.getElementById(trigger.getAttribute("data-label"));
+                    const defText = trigger.getAttribute("data-default");
+
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text);
+                    }
+                    if (label) {
+                        label.textContent = "// COPIED!";
+                        label.style.color = "#10B981";
+                        setTimeout(() => {
+                            label.textContent = defText;
+                            label.style.color = "";
+                        }, 1400);
                     }
                 });
             });
-
-            function triggerLabelCopied(element, defaultText) {
-                if (!element) return;
-                element.textContent = "// COPIED!";
-                element.style.color = "#10B981";
-                
-                setTimeout(() => {
-                    element.textContent = defaultText;
-                    element.style.color = "";
-                }, 1500);
-            }
-
-            function fallbackCopyAction(text, element, defaultText) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.opacity = "0";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    triggerLabelCopied(element, defaultText);
-                } catch (err) {
-                    console.error(err);
-                }
-                document.body.removeChild(textArea);
-            }
         });
     </script>
 </body>
