@@ -236,7 +236,7 @@
                                         </div>
 
                                         <p class="text-zinc-300/95 leading-normal">
-                                            <strong class="text-white font-medium">L'Insoumise</strong> is a self-initiated concept commercial for a fictional perfume. It is not a client job and not a real product. Inspired by the high-energy 2000s pop-culture ads (like the Britney Spears Pepsi spot) and the visual style of Ilya Naishuller.
+                                            <strong class="text-white font-medium">L'Insoumise</strong> is a self-initiated concept commercial for a perfume. Inspired by the high-energy 2000s pop-culture ads (like the Britney Spears Pepsi spot) and the visual style of Ilya Naishuller.
                                         </p>
                                         
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
@@ -455,12 +455,11 @@
                     if (!response.ok) return;
                     const data = await response.json();
                     if (data && data.thumbnail_url) {
-                        // Подставляем HD-разрешение 1280px от Vimeo CDN
                         const highResThumb = data.thumbnail_url.replace(/_[0-9x]+(?=\.[a-z]+$|$)/i, '_1280');
                         thumbImg.src = highResThumb;
                     }
                 } catch (e) {
-                    // Fallback уже прописан в HTML на случай оффлайна
+                    // Fallback
                 }
             });
 
