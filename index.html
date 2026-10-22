@@ -85,6 +85,11 @@
             .glass-panel:hover {
                 border-color: rgba(255, 255, 255, 0.18);
             }
+            .carousel-slide:not(.active-slide):hover {
+                opacity: 0.65;
+                transform: scale(0.83);
+                filter: brightness(0.65) saturate(0.9);
+            }
         }
 
         .chrome-btn:active {
@@ -111,7 +116,7 @@
         .carousel-track {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             will-change: transform;
         }
 
@@ -127,12 +132,12 @@
             }
         }
 
-        /* Базовые слайды */
+        /* Базовые слайды для мобильных устройств (крайние уходят за край экрана) */
         .carousel-slide {
-            flex: 0 0 82%;
-            width: 82%;
-            opacity: 0.35;
-            transform: scale(0.88);
+            flex: 0 0 76%;
+            width: 76%;
+            opacity: 0.4;
+            transform: scale(0.90);
             transform-origin: center center;
             filter: brightness(0.4) saturate(0.7);
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
@@ -147,16 +152,16 @@
         /* Планшеты (640px - 1023px) */
         @media (min-width: 640px) and (max-width: 1023px) {
             .carousel-slide {
-                flex: 0 0 62%;
-                width: 62%;
+                flex: 0 0 60%;
+                width: 60%;
                 transform: scale(0.86);
             }
             .carousel-slide.active-slide {
-                transform: scale(1.08);
+                transform: scale(1.03);
             }
         }
 
-        /* Компьютеры (от 1024px): боковые компактнее, активная — крупная как раньше */
+        /* Компьютеры (от 1024px): центральная работа уменьшена ~20-25px для идеального баланса и видимости рамок */
         @media (min-width: 1024px) {
             .carousel-slide {
                 flex: 0 0 calc((100% - 48px) / 3);
@@ -166,37 +171,23 @@
                 filter: brightness(0.4) saturate(0.7);
             }
             
-            /* Увеличенная главная работа */
             .carousel-slide.active-slide {
-                transform: scale(1.22);
+                transform: scale(1.14);
                 z-index: 25;
             }
         }
 
-        /* Активная карточка: 100% яркость и красивое свечение */
+        /* Активная карточка */
         .carousel-slide.active-slide {
             opacity: 1;
             filter: brightness(1) saturate(1);
             cursor: default;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.16);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.18);
         }
 
         @media (max-width: 639px) {
             .carousel-slide.active-slide {
                 transform: scale(1);
-            }
-        }
-
-        /* Ховер на боковые превью */
-        .carousel-slide:not(.active-slide):hover {
-            opacity: 0.7;
-            transform: scale(0.83);
-            filter: brightness(0.65) saturate(0.9);
-        }
-
-        @media (max-width: 639px) {
-            .carousel-slide:not(.active-slide):hover {
-                transform: scale(0.9);
             }
         }
 
@@ -249,7 +240,7 @@
         <main class="w-full flex-grow flex flex-col justify-center">
             
             <!-- Hero Screen -->
-            <section class="min-h-[68vh] sm:min-h-[75vh] max-w-4xl mx-auto w-full flex flex-col justify-center items-center text-center py-8 select-none px-4 sm:px-8">
+            <section class="min-h-[65vh] sm:min-h-[72vh] max-w-4xl mx-auto w-full flex flex-col justify-center items-center text-center py-8 select-none px-4 sm:px-8">
                 <div class="flex flex-col items-center">
                     <h1 class="text-[11px] min-[375px]:text-xs sm:text-sm md:text-base tracking-[0.22em] text-zinc-200 font-extrabold uppercase mb-5 sm:mb-6 drop-shadow-lg">
                         [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
@@ -266,11 +257,11 @@
             </section>
 
             <!-- Video Portfolio Showcase -->
-            <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 max-w-[1700px] mx-auto w-full pt-4 px-3 sm:px-6 lg:px-8">
+            <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 w-full pt-4">
                 
-                <!-- Плашка управления: возвращена ближе к центру, обрамляет активную работу -->
-                <div class="flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-4 max-w-[860px] mx-auto">
-                    <div class="flex items-center gap-2">
+                <!-- Плашка управления: выровнена строго по сетке шапки (Header) -->
+                <div class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6">
+                    <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
                         <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
                     </div>
@@ -285,8 +276,8 @@
                     </div>
                 </div>
                 
-                <!-- Окно карусели: py-10 исключает обрезание увеличенной карточки по вертикали -->
-                <div class="overflow-hidden relative w-full py-10 -my-10" id="carousel-viewport" style="touch-action: pan-y;">
+                <!-- Окно карусели: py-12/sm:py-16 исключает обрезание увеличенной карточки по вертикали -->
+                <div class="overflow-hidden relative w-full py-12 sm:py-16 -my-12 sm:-my-16" id="carousel-viewport" style="touch-action: pan-y;">
                     <div class="carousel-track" id="carousel-track">
                         
                         <!-- СЛАЙД 1: L'INSOUMISE -->
@@ -655,7 +646,7 @@
             const originalSlides = Array.from(track.querySelectorAll(".carousel-slide"));
             const N = originalSlides.length; // 4 работы
 
-            // Создаем по 2 клона с каждой стороны для гладкого бесконечного цикла
+            // Создаем по 2 клона с каждой стороны для бесшовного цикла
             const cloneStart1 = originalSlides[N - 2].cloneNode(true);
             const cloneStart2 = originalSlides[N - 1].cloneNode(true);
             const cloneEnd1 = originalSlides[0].cloneNode(true);
@@ -672,7 +663,7 @@
             track.appendChild(cloneEnd2);
 
             const allSlides = Array.from(track.children);
-            let currentDOMIndex = 2; // Реальный первый слайд находится по индексу 2
+            let currentDOMIndex = 2; // Реальный первый слайд
             let isTransitioning = false;
             let transitionTimeout = null;
 
@@ -695,7 +686,7 @@
 
                 currentDOMIndex = domIdx;
 
-                // Обновляем активные классы
+                // Обновляем классы активности
                 allSlides.forEach((slide, idx) => {
                     if (idx === currentDOMIndex) {
                         slide.classList.add("active-slide");
@@ -704,7 +695,7 @@
                     }
                 });
 
-                // Обновляем счетчик и точки
+                // Обновляем счетчик и индикаторы
                 const realIdx = getRealIndex(currentDOMIndex);
                 counter.textContent = `0${realIdx + 1} / 0${N}`;
 
@@ -714,7 +705,7 @@
                         : "w-2 h-1 rounded-full bg-white/20 transition-all duration-300";
                 });
 
-                // Точное центрирование по центру активного слайда
+                // Точное центрирование по геометрическому центру активного слайда
                 const targetSlide = allSlides[currentDOMIndex];
                 const viewportWidth = viewport.offsetWidth;
                 const slideCenter = targetSlide.offsetLeft + (targetSlide.offsetWidth / 2);
@@ -724,7 +715,6 @@
 
             function handleTransitionEnd() {
                 isTransitioning = false;
-                // Мгновенный перескок между клонами и реальными слайдами без дергания
                 if (currentDOMIndex <= 1) {
                     moveTo(currentDOMIndex + N, false);
                 } else if (currentDOMIndex >= N + 2) {
@@ -738,7 +728,6 @@
                 handleTransitionEnd();
             });
 
-            // Кнопки навигации
             prevBtn.addEventListener("click", () => {
                 if (isTransitioning) return;
                 moveTo(currentDOMIndex - 1, true);
@@ -749,7 +738,6 @@
                 moveTo(currentDOMIndex + 1, true);
             });
 
-            // Нажатие по точкам
             dots.forEach(dot => {
                 dot.addEventListener("click", () => {
                     if (isTransitioning) return;
@@ -758,11 +746,10 @@
                 });
             });
 
-            // Клик по слайдам:
-            // Клик по боковому превью центрирует его
-            // Клик по центральному видео открывает просмотр
+            // Клик по слайдам: центрирование или открытие видео
             allSlides.forEach((slide, idx) => {
                 slide.addEventListener("click", (e) => {
+                    if (hasSwiped) return; // Игнорируем случайный тап при завершении свайпа
                     if (idx !== currentDOMIndex) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -778,7 +765,6 @@
                 });
             });
 
-            // Ресайз окна
             window.addEventListener("resize", () => {
                 moveTo(currentDOMIndex, false);
             });
@@ -814,16 +800,26 @@
                 }
             });
 
-            // 4. Touch свайп для мобильных
+            // 4. Оптимизированный Touch свайп для мобильных
             let touchStartX = 0;
             let touchStartY = 0;
             let isSwiping = false;
+            let hasSwiped = false;
 
             viewport.addEventListener("touchstart", (e) => {
                 if (isTransitioning) return;
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 isSwiping = true;
+                hasSwiped = false;
+            }, { passive: true });
+
+            viewport.addEventListener("touchmove", (e) => {
+                if (!isSwiping) return;
+                const curX = e.touches[0].clientX;
+                if (Math.abs(curX - touchStartX) > 10) {
+                    hasSwiped = true;
+                }
             }, { passive: true });
 
             viewport.addEventListener("touchend", (e) => {
@@ -832,13 +828,15 @@
                 const diffX = touchStartX - e.changedTouches[0].clientX;
                 const diffY = touchStartY - e.changedTouches[0].clientY;
 
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+                // Горизонтальный свайп с порогом 30px
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
                     if (diffX > 0) {
                         moveTo(currentDOMIndex + 1, true);
                     } else {
                         moveTo(currentDOMIndex - 1, true);
                     }
                 }
+                setTimeout(() => { hasSwiped = false; }, 60);
             }, { passive: true });
 
             // 5. Клавиатура
