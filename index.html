@@ -259,14 +259,14 @@
             <!-- Video Portfolio Showcase -->
             <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 w-full pt-4">
                 
-                <!-- Плашка управления: выровнена слева по навигации, правый край стрелок строго по правому краю активной работы -->
+                <!-- Плашка управления: выровнена слева по навигации, правый край стрелок аккуратно стоит над правым краем центральной плашки -->
                 <div id="showcase-controls" class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6 relative z-30 pointer-events-auto">
                     <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
                         <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
                     </div>
 
-                    <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2">
+                    <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2 transition-[margin] duration-200 ease-out">
                         <button id="prev-slide" aria-label="Previous Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95 cursor-pointer relative z-30">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                         </button>
@@ -670,7 +670,7 @@
             let isTransitioning = false;
             let transitionTimeout = null;
 
-            // Выравнивание правого края стрелок точно по правому краю центральной (активной) работы
+            // Выравнивание блока стрелок точно над правым краем центральной (активной) плашки
             function alignArrowsToActiveSlide() {
                 if (!arrowsContainer || !controlsBar || !viewport) return;
                 
@@ -691,7 +691,7 @@
                     scale = 1.03;
                 }
 
-                // Вычисляем точную правую координату центрированной активной карточки
+                // Вычисляем точный правый край центрированной активной карточки
                 const slideWidth = activeSlide.offsetWidth * scale;
                 const vpRect = viewport.getBoundingClientRect();
                 const vpCenter = vpRect.left + (vpRect.width / 2);
@@ -700,11 +700,11 @@
                 const controlsRect = controlsBar.getBoundingClientRect();
                 const diff = controlsRect.right - targetSlideRight;
 
-                if (diff > 0) {
-                    arrowsContainer.style.marginRight = `${Math.round(diff)}px`;
-                } else {
-                    arrowsContainer.style.marginRight = "0px";
-                }
+                // Сдвиг на 36px правее центрирует связку стрелок ровно над правым ребром/углом плашки видео
+                const offsetRight = 36;
+                const finalMargin = Math.max(0, Math.round(diff - offsetRight));
+
+                arrowsContainer.style.marginRight = `${finalMargin}px`;
             }
 
             function getRealIndex(domIdx) {
