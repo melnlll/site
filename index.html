@@ -132,7 +132,7 @@
             }
         }
 
-        /* Базовые слайды для мобильных устройств (крайние уходят за край экрана) */
+        /* Базовые слайды для мобильных устройств (крайние уходят за границы экрана) */
         .carousel-slide {
             flex: 0 0 76%;
             width: 76%;
@@ -161,7 +161,7 @@
             }
         }
 
-        /* Компьютеры (от 1024px): центральная работа уменьшена ~20-25px для идеального баланса и видимости рамок */
+        /* Компьютеры (от 1024px): центральная работа уменьшена ~20-25px для идеального баланса */
         @media (min-width: 1024px) {
             .carousel-slide {
                 flex: 0 0 calc((100% - 48px) / 3);
@@ -251,7 +251,7 @@
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[3D ART]</span>
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[CAMERA TRACKING]</span>
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[ROTO & CLEANUP]</span>
-                        <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[AI-ASSISTED VFX]</span>
+                        <span id="badge-ai-assisted" class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[AI-ASSISTED VFX]</span>
                     </div>
                 </div>
             </section>
@@ -259,25 +259,25 @@
             <!-- Video Portfolio Showcase -->
             <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 w-full pt-4">
                 
-                <!-- Плашка управления: выровнена строго по сетке шапки (Header) -->
-                <div class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6">
+                <!-- Плашка управления: выровнена слева по навигации, стрелки привязаны к правому краю [AI-ASSISTED VFX] -->
+                <div id="showcase-controls" class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6 relative z-30 pointer-events-auto">
                     <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
                         <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
                     </div>
 
-                    <div class="flex items-center gap-1.5 sm:gap-2">
-                        <button id="prev-slide" aria-label="Previous Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95">
+                    <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2 transition-[margin] duration-150">
+                        <button id="prev-slide" aria-label="Previous Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95 cursor-pointer relative z-30">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                         </button>
-                        <button id="next-slide" aria-label="Next Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95">
+                        <button id="next-slide" aria-label="Next Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95 cursor-pointer relative z-30">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                         </button>
                     </div>
                 </div>
                 
-                <!-- Окно карусели: py-12/sm:py-16 исключает обрезание увеличенной карточки по вертикали -->
-                <div class="overflow-hidden relative w-full py-12 sm:py-16 -my-12 sm:-my-16" id="carousel-viewport" style="touch-action: pan-y;">
+                <!-- Окно карусели: опущено на 15px (mt-[15px]), исключено любое перекрытие элементов -->
+                <div class="overflow-hidden relative w-full pt-8 pb-14 sm:pt-10 sm:pb-16 mt-[15px] z-10" id="carousel-viewport" style="touch-action: pan-y;">
                     <div class="carousel-track" id="carousel-track">
                         
                         <!-- СЛАЙД 1: L'INSOUMISE -->
@@ -491,7 +491,7 @@
                 </div>
 
                 <!-- Точки пагинации -->
-                <div class="flex justify-center items-center gap-2 mt-6" id="carousel-dots">
+                <div class="flex justify-center items-center gap-2 mt-4 sm:mt-6" id="carousel-dots">
                     <button class="w-6 h-1 rounded-full bg-white transition-all duration-300" data-index="0" aria-label="Slide 1"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="1" aria-label="Slide 2"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="2" aria-label="Slide 3"></button>
@@ -626,6 +626,7 @@
                                         setTimeout(() => {
                                             preloader.remove();
                                             moveTo(currentDOMIndex, false);
+                                            alignArrowsToBadge();
                                         }, 400);
                                     }, 220);
                                 }, 80);
@@ -642,6 +643,9 @@
             const prevBtn = document.getElementById("prev-slide");
             const nextBtn = document.getElementById("next-slide");
             const dots = document.querySelectorAll("#carousel-dots button");
+            const arrowsContainer = document.getElementById("carousel-arrows-container");
+            const controlsBar = document.getElementById("showcase-controls");
+            const aiBadge = document.getElementById("badge-ai-assisted");
 
             const originalSlides = Array.from(track.querySelectorAll(".carousel-slide"));
             const N = originalSlides.length; // 4 работы
@@ -667,6 +671,27 @@
             let isTransitioning = false;
             let transitionTimeout = null;
 
+            // Выравнивание стрелок по правому краю [AI-ASSISTED VFX]
+            function alignArrowsToBadge() {
+                if (!aiBadge || !arrowsContainer || !controlsBar) return;
+                
+                // На смартфонах (< 640px) стрелки аккуратно остаются у правого края контейнера
+                if (window.innerWidth < 640) {
+                    arrowsContainer.style.marginRight = "0px";
+                    return;
+                }
+
+                const badgeRect = aiBadge.getBoundingClientRect();
+                const controlsRect = controlsBar.getBoundingClientRect();
+                const diff = controlsRect.right - badgeRect.right;
+
+                if (diff > 0) {
+                    arrowsContainer.style.marginRight = `${Math.round(diff)}px`;
+                } else {
+                    arrowsContainer.style.marginRight = "0px";
+                }
+            }
+
             function getRealIndex(domIdx) {
                 return (domIdx - 2 + N) % N;
             }
@@ -678,7 +703,7 @@
                     clearTimeout(transitionTimeout);
                     transitionTimeout = setTimeout(() => {
                         handleTransitionEnd();
-                    }, 550);
+                    }, 520);
                 } else {
                     track.style.transition = 'none';
                     isTransitioning = false;
@@ -728,19 +753,25 @@
                 handleTransitionEnd();
             });
 
-            prevBtn.addEventListener("click", () => {
-                if (isTransitioning) return;
+            // Кнопки навигации: поддержка быстрого переключения без задержек
+            prevBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (isTransitioning) handleTransitionEnd();
                 moveTo(currentDOMIndex - 1, true);
             });
 
-            nextBtn.addEventListener("click", () => {
-                if (isTransitioning) return;
+            nextBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (isTransitioning) handleTransitionEnd();
                 moveTo(currentDOMIndex + 1, true);
             });
 
             dots.forEach(dot => {
-                dot.addEventListener("click", () => {
-                    if (isTransitioning) return;
+                dot.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (isTransitioning) handleTransitionEnd();
                     const targetReal = parseInt(dot.getAttribute("data-index"));
                     moveTo(targetReal + 2, true);
                 });
@@ -749,13 +780,12 @@
             // Клик по слайдам: центрирование или открытие видео
             allSlides.forEach((slide, idx) => {
                 slide.addEventListener("click", (e) => {
-                    if (hasSwiped) return; // Игнорируем случайный тап при завершении свайпа
+                    if (hasSwiped) return; // Игнорируем случайный тап при свайпе
                     if (idx !== currentDOMIndex) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (!isTransitioning) {
-                            moveTo(idx, true);
-                        }
+                        if (isTransitioning) handleTransitionEnd();
+                        moveTo(idx, true);
                     } else {
                         const card = e.target.closest(".video-card");
                         if (card) {
@@ -767,10 +797,19 @@
 
             window.addEventListener("resize", () => {
                 moveTo(currentDOMIndex, false);
+                alignArrowsToBadge();
             });
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    alignArrowsToBadge();
+                    moveTo(currentDOMIndex, false);
+                });
+            }
 
             // Первичный расчет позиции
             moveTo(2, false);
+            alignArrowsToBadge();
 
             // 3. Автоподгрузка HD превью Vimeo для всех слайдов и клонов
             const thumbCache = {};
@@ -807,7 +846,6 @@
             let hasSwiped = false;
 
             viewport.addEventListener("touchstart", (e) => {
-                if (isTransitioning) return;
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 isSwiping = true;
@@ -823,13 +861,13 @@
             }, { passive: true });
 
             viewport.addEventListener("touchend", (e) => {
-                if (!isSwiping || isTransitioning) return;
+                if (!isSwiping) return;
                 isSwiping = false;
                 const diffX = touchStartX - e.changedTouches[0].clientX;
                 const diffY = touchStartY - e.changedTouches[0].clientY;
 
-                // Горизонтальный свайп с порогом 30px
                 if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+                    if (isTransitioning) handleTransitionEnd();
                     if (diffX > 0) {
                         moveTo(currentDOMIndex + 1, true);
                     } else {
@@ -842,8 +880,14 @@
             // 5. Клавиатура
             document.addEventListener("keydown", (e) => {
                 if (lightbox.classList.contains("pointer-events-none")) {
-                    if (e.key === "ArrowLeft" && !isTransitioning) moveTo(currentDOMIndex - 1, true);
-                    if (e.key === "ArrowRight" && !isTransitioning) moveTo(currentDOMIndex + 1, true);
+                    if (e.key === "ArrowLeft") {
+                        if (isTransitioning) handleTransitionEnd();
+                        moveTo(currentDOMIndex - 1, true);
+                    }
+                    if (e.key === "ArrowRight") {
+                        if (isTransitioning) handleTransitionEnd();
+                        moveTo(currentDOMIndex + 1, true);
+                    }
                 } else if (e.key === "Escape") {
                     closeLightbox();
                 }
