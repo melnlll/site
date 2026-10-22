@@ -45,12 +45,12 @@
 
         /* Dark Glassmorphism карточки */
         .glass-panel {
-            background: rgba(14, 14, 18, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(14, 14, 18, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         /* Кнопки в металлическом стиле */
@@ -107,27 +107,37 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* Бесшовная карусель с превью по бокам */
+        /* Бесшовная карусель с широким обзором превью */
         .carousel-track {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             will-change: transform;
         }
 
         @media (min-width: 640px) {
             .carousel-track {
-                gap: 22px;
+                gap: 26px;
             }
         }
 
+        @media (min-width: 1024px) {
+            .carousel-track {
+                gap: 34px;
+            }
+        }
+
+        /* Неактивные слайды: уменьшены по scale, затемнены, полупрозрачные */
         .carousel-slide {
-            flex: 0 0 84%;
-            width: 84%;
+            flex: 0 0 82%;
+            width: 82%;
             opacity: 0.35;
-            transform: scale(0.93);
-            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
-                        opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+            transform: scale(0.86);
+            transform-origin: center center;
+            filter: brightness(0.4) saturate(0.7);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                        filter 0.5s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.3s ease;
             cursor: pointer;
             user-select: none;
@@ -135,43 +145,56 @@
 
         @media (min-width: 640px) {
             .carousel-slide {
-                flex: 0 0 78%;
-                width: 78%;
-                transform: scale(0.92);
+                flex: 0 0 70%;
+                width: 70%;
+                transform: scale(0.85);
             }
         }
 
         @media (min-width: 1024px) {
             .carousel-slide {
-                flex: 0 0 74%;
-                width: 74%;
-                transform: scale(0.91);
+                flex: 0 0 58%;
+                width: 58%;
+                transform: scale(0.84);
             }
         }
 
+        @media (min-width: 1280px) {
+            .carousel-slide {
+                flex: 0 0 55%;
+                width: 55%;
+                transform: scale(0.83);
+            }
+        }
+
+        /* Активный центральный слайд: 100% яркости и нормальный масштаб */
         .carousel-slide.active-slide {
             opacity: 1;
             transform: scale(1);
+            filter: brightness(1) saturate(1);
             cursor: default;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
         }
 
+        /* Ховер на боковые превью */
         .carousel-slide:not(.active-slide):hover {
             opacity: 0.65;
-            transform: scale(0.94);
+            transform: scale(0.87);
+            filter: brightness(0.65) saturate(0.9);
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 1024px) {
             .carousel-slide:not(.active-slide):hover {
-                transform: scale(0.93);
+                transform: scale(0.86);
             }
         }
 
-        /* Защита от открытия видео при клике на неактивное превью */
+        /* Защита от случайного запуска видео при клике по боковому превью */
         .carousel-slide:not(.active-slide) .video-card {
             pointer-events: none;
         }
 
-        /* Кастомный тонкий скроллбар */
+        /* Кастомный скроллбар */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
@@ -181,7 +204,7 @@
 
 <body class="min-h-screen flex flex-col justify-between py-6 sm:py-8 px-0 selection:bg-zinc-800 selection:text-white">
 
-    <!-- Фоновый кадр (прокручивается вместе со страницей) -->
+    <!-- Фоновый кадр -->
     <div class="cinema-bg"></div>
 
     <!-- Матричный Glitch Preloader -->
@@ -193,10 +216,10 @@
     </div>
 
     <!-- Основной контейнер контента -->
-    <div id="main-content" class="opacity-0 transition-opacity duration-700 flex-grow flex flex-col justify-between relative z-10">
+    <div id="main-content" class="opacity-0 transition-opacity duration-700 flex-grow flex flex-col justify-between relative z-10 w-full overflow-hidden">
         
         <!-- Header -->
-        <header class="w-full px-4 sm:px-10 lg:px-16 flex flex-row justify-between items-center sm:items-start gap-2 mb-6 sm:mb-10">
+        <header class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex flex-row justify-between items-center sm:items-start gap-2 mb-6 sm:mb-10">
             <nav class="flex flex-col items-start gap-1">
                 <a href="#portfolio" class="text-[11px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase hover:text-white transition-colors py-0.5">
                     // ART PORTFOLIO
@@ -211,12 +234,12 @@
             </div>
         </header>
 
-        <!-- Main Workspace -->
-        <main class="max-w-6xl w-full mx-auto flex-grow flex flex-col justify-center px-3 sm:px-8">
+        <!-- Main Workspace (на всю ширину для просторной карусели) -->
+        <main class="w-full flex-grow flex flex-col justify-center">
             
             <!-- Hero Screen -->
-            <section class="min-h-[70vh] sm:min-h-[78vh] flex flex-col justify-center items-center text-center py-8 select-none">
-                <div class="max-w-4xl mx-auto flex flex-col items-center">
+            <section class="min-h-[68vh] sm:min-h-[75vh] max-w-4xl mx-auto w-full flex flex-col justify-center items-center text-center py-8 select-none px-4 sm:px-8">
+                <div class="flex flex-col items-center">
                     <h1 class="text-[11px] min-[375px]:text-xs sm:text-sm md:text-base tracking-[0.22em] text-zinc-200 font-extrabold uppercase mb-5 sm:mb-6 drop-shadow-lg">
                         [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
                     </h1>
@@ -231,11 +254,11 @@
                 </div>
             </section>
 
-            <!-- Video Portfolio Carousel Section (Peek Carousel) -->
-            <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 max-w-5xl mx-auto w-full pt-4">
+            <!-- Video Portfolio Carousel Section (Широкая сцена до 1440px) -->
+            <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 max-w-[1440px] mx-auto w-full pt-4 px-2 sm:px-6 lg:px-8">
                 
-                <!-- Заголовок и контроллеры карусели -->
-                <div class="flex items-center justify-between mb-3 sm:mb-5 px-2 sm:px-1">
+                <!-- Заголовок и контроллеры карусели (центрированы над активной областью) -->
+                <div class="flex items-center justify-between mb-3 sm:mb-5 px-3 sm:px-4 max-w-5xl mx-auto">
                     <div class="flex items-center gap-2">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
                         <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
@@ -251,8 +274,8 @@
                     </div>
                 </div>
                 
-                <!-- Окно слайдера (визуальные боковые превью с touch-action: pan-y) -->
-                <div class="overflow-hidden relative w-full py-2 -my-2" id="carousel-viewport" style="touch-action: pan-y;">
+                <!-- Окно карусели: широкое, с видимыми превью слева и справа -->
+                <div class="overflow-hidden relative w-full py-4 -my-4" id="carousel-viewport" style="touch-action: pan-y;">
                     <div class="carousel-track" id="carousel-track">
                         
                         <!-- СЛАЙД 1: L'INSOUMISE -->
@@ -465,8 +488,8 @@
                     </div>
                 </div>
 
-                <!-- Пагинация точками (4 проекта) -->
-                <div class="flex justify-center items-center gap-2 mt-5" id="carousel-dots">
+                <!-- Пагинация точками -->
+                <div class="flex justify-center items-center gap-2 mt-6" id="carousel-dots">
                     <button class="w-6 h-1 rounded-full bg-white transition-all duration-300" data-index="0" aria-label="Slide 1"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="1" aria-label="Slide 2"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="2" aria-label="Slide 3"></button>
@@ -475,7 +498,7 @@
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="max-w-xl mx-auto w-full text-center mb-10 sm:mb-14 scroll-mt-20">
+            <section id="contact" class="max-w-xl mx-auto w-full text-center mb-10 sm:mb-14 scroll-mt-20 px-4">
                 <h3 class="text-[10px] sm:text-xs tracking-[0.3em] font-bold text-zinc-400 uppercase mb-4 sm:mb-6">// CONNECT / START PROJECT</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 px-1">
@@ -528,7 +551,7 @@
                 <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
 
-            <!-- Блок описания (черный полупрозрачный фон + серо-белый текст) -->
+            <!-- Блок описания -->
             <div class="mt-4 p-5 sm:p-7 rounded-xl sm:rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 shadow-2xl text-left">
                 <div class="pb-3 border-b border-white/10">
                     <h3 id="lightbox-title" class="text-white text-base sm:text-xl font-bold tracking-tight"></h3>
@@ -612,7 +635,7 @@
                 }
             }, 850);
 
-            // 2. Инициализация бесшовной Peek-карусели с клонами
+            // 2. Инициализация бесшовной Peek-карусели
             const track = document.getElementById("carousel-track");
             const viewport = document.getElementById("carousel-viewport");
             const counter = document.getElementById("carousel-counter");
@@ -623,8 +646,7 @@
             const originalSlides = Array.from(track.querySelectorAll(".carousel-slide"));
             const N = originalSlides.length; // 4 проекта
 
-            // Создаем клоны для бесконечной прокрутки в обе стороны:
-            // В начало вставляем клон последнего слайда, в конец — клон первого
+            // Клоны для бесконечного цикла
             const firstClone = originalSlides[0].cloneNode(true);
             const lastClone = originalSlides[N - 1].cloneNode(true);
 
@@ -635,7 +657,6 @@
             track.insertBefore(lastClone, originalSlides[0]);
 
             const allSlides = Array.from(track.children);
-            // Индекс 1 соответствует реальному первому проекту
             let currentDOMIndex = 1;
             let isTransitioning = false;
 
@@ -647,7 +668,7 @@
 
             function moveTo(domIdx, smooth = true) {
                 if (smooth) {
-                    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+                    track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                     isTransitioning = true;
                 } else {
                     track.style.transition = 'none';
@@ -674,7 +695,7 @@
                         : "w-2 h-1 rounded-full bg-white/20 transition-all duration-300";
                 });
 
-                // Центрирование активного слайда с видимыми превью по бокам
+                // Точное центрирование по геометрическому центру слайда
                 const targetSlide = allSlides[currentDOMIndex];
                 const viewportWidth = viewport.offsetWidth;
                 const slideCenter = targetSlide.offsetLeft + (targetSlide.offsetWidth / 2);
@@ -682,19 +703,19 @@
                 track.style.transform = `translateX(${targetTranslate}px)`;
             }
 
-            // Бесшовный перескок после завершения анимации
+            // Бесшовный перескок после окончания анимации
             track.addEventListener("transitionend", (e) => {
                 if (e.target !== track || e.propertyName !== "transform") return;
                 isTransitioning = false;
 
                 if (currentDOMIndex === 0) {
-                    moveTo(N, false); // с клона последнего моментально на реальный последний
+                    moveTo(N, false);
                 } else if (currentDOMIndex === N + 1) {
-                    moveTo(1, false); // с клона первого моментально на реальный первый
+                    moveTo(1, false);
                 }
             });
 
-            // Кнопки навигации
+            // Навигационные кнопки
             prevBtn.addEventListener("click", () => {
                 if (isTransitioning) return;
                 moveTo(currentDOMIndex - 1, true);
@@ -705,7 +726,7 @@
                 moveTo(currentDOMIndex + 1, true);
             });
 
-            // Нажатие на точки пагинации
+            // Нажатие по точкам
             dots.forEach(dot => {
                 dot.addEventListener("click", () => {
                     if (isTransitioning) return;
@@ -715,8 +736,8 @@
             });
 
             // Клик по слайдам:
-            // Если слайд боковой (превью) -> перелистываем к нему!
-            // Если слайд центральный активный -> открываем видео в модалке!
+            // Если боковое превью -> перелистываем к нему!
+            // Если центральный активный слайд -> открываем видео!
             allSlides.forEach((slide, idx) => {
                 slide.addEventListener("click", (e) => {
                     if (idx !== currentDOMIndex) {
@@ -734,12 +755,12 @@
                 });
             });
 
-            // Подстройка при изменении размера экрана
+            // Подстройка при ресайзе окна
             window.addEventListener("resize", () => {
                 moveTo(currentDOMIndex, false);
             });
 
-            // Первичная центровка
+            // Первичный расчет позиции
             moveTo(1, false);
 
             // 3. Автоподгрузка HD превью из Vimeo
@@ -764,11 +785,11 @@
                         thumbImg.src = highResThumb;
                     }
                 } catch (e) {
-                    // Fallback на дефолтный src
+                    // Fallback
                 }
             });
 
-            // 4. Touch Swipe (адаптивно для смартфонов)
+            // 4. Touch Swipe (для мобильных)
             let touchStartX = 0;
             let touchStartY = 0;
             let isSwiping = false;
@@ -805,7 +826,7 @@
                 }
             });
 
-            // 6. Открытие и закрытие Lightbox
+            // 6. Lightbox
             function openLightboxForCard(card) {
                 const videoId = card.getAttribute("data-video-id");
                 lightboxTitle.textContent = card.getAttribute("data-title");
