@@ -251,7 +251,7 @@
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[3D ART]</span>
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[CAMERA TRACKING]</span>
                         <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[ROTO & CLEANUP]</span>
-                        <span id="badge-ai-assisted" class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[AI-ASSISTED VFX]</span>
+                        <span class="px-3 py-1 text-[9px] sm:text-xs border border-white/15 rounded-full text-zinc-200 bg-black/45 backdrop-blur-md font-mono">[AI-ASSISTED VFX]</span>
                     </div>
                 </div>
             </section>
@@ -259,14 +259,14 @@
             <!-- Video Portfolio Showcase -->
             <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 w-full pt-4">
                 
-                <!-- Плашка управления: выровнена слева по навигации, стрелки привязаны к правому краю [AI-ASSISTED VFX] -->
+                <!-- Плашка управления: выровнена слева по навигации, правый край стрелок строго по правому краю активной работы -->
                 <div id="showcase-controls" class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6 relative z-30 pointer-events-auto">
                     <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
                         <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
                     </div>
 
-                    <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2 transition-[margin] duration-150">
+                    <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2">
                         <button id="prev-slide" aria-label="Previous Slide" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-all text-zinc-300 hover:text-white active:scale-95 cursor-pointer relative z-30">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                         </button>
@@ -626,7 +626,7 @@
                                         setTimeout(() => {
                                             preloader.remove();
                                             moveTo(currentDOMIndex, false);
-                                            alignArrowsToBadge();
+                                            alignArrowsToActiveSlide();
                                         }, 400);
                                     }, 220);
                                 }, 80);
@@ -645,7 +645,6 @@
             const dots = document.querySelectorAll("#carousel-dots button");
             const arrowsContainer = document.getElementById("carousel-arrows-container");
             const controlsBar = document.getElementById("showcase-controls");
-            const aiBadge = document.getElementById("badge-ai-assisted");
 
             const originalSlides = Array.from(track.querySelectorAll(".carousel-slide"));
             const N = originalSlides.length; // 4 работы
@@ -671,19 +670,35 @@
             let isTransitioning = false;
             let transitionTimeout = null;
 
-            // Выравнивание стрелок по правому краю [AI-ASSISTED VFX]
-            function alignArrowsToBadge() {
-                if (!aiBadge || !arrowsContainer || !controlsBar) return;
+            // Выравнивание правого края стрелок точно по правому краю центральной (активной) работы
+            function alignArrowsToActiveSlide() {
+                if (!arrowsContainer || !controlsBar || !viewport) return;
                 
-                // На смартфонах (< 640px) стрелки аккуратно остаются у правого края контейнера
+                // На смартфонах (< 640px) стрелки сохраняют аккуратный отступ у границы экрана
                 if (window.innerWidth < 640) {
                     arrowsContainer.style.marginRight = "0px";
                     return;
                 }
 
-                const badgeRect = aiBadge.getBoundingClientRect();
+                const activeSlide = allSlides[currentDOMIndex] || document.querySelector('.carousel-slide.active-slide');
+                if (!activeSlide) return;
+
+                // Масштаб активной работы в зависимости от ширины экрана
+                let scale = 1.0;
+                if (window.innerWidth >= 1024) {
+                    scale = 1.14;
+                } else if (window.innerWidth >= 640) {
+                    scale = 1.03;
+                }
+
+                // Вычисляем точную правую координату центрированной активной карточки
+                const slideWidth = activeSlide.offsetWidth * scale;
+                const vpRect = viewport.getBoundingClientRect();
+                const vpCenter = vpRect.left + (vpRect.width / 2);
+                const targetSlideRight = vpCenter + (slideWidth / 2);
+
                 const controlsRect = controlsBar.getBoundingClientRect();
-                const diff = controlsRect.right - badgeRect.right;
+                const diff = controlsRect.right - targetSlideRight;
 
                 if (diff > 0) {
                     arrowsContainer.style.marginRight = `${Math.round(diff)}px`;
@@ -780,7 +795,7 @@
             // Клик по слайдам: центрирование или открытие видео
             allSlides.forEach((slide, idx) => {
                 slide.addEventListener("click", (e) => {
-                    if (hasSwiped) return; // Игнорируем случайный тап при свайпе
+                    if (hasSwiped) return; // Игнорируем случайный тап при завершении свайпа
                     if (idx !== currentDOMIndex) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -797,19 +812,19 @@
 
             window.addEventListener("resize", () => {
                 moveTo(currentDOMIndex, false);
-                alignArrowsToBadge();
+                alignArrowsToActiveSlide();
             });
 
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => {
-                    alignArrowsToBadge();
+                    alignArrowsToActiveSlide();
                     moveTo(currentDOMIndex, false);
                 });
             }
 
             // Первичный расчет позиции
             moveTo(2, false);
-            alignArrowsToBadge();
+            alignArrowsToActiveSlide();
 
             // 3. Автоподгрузка HD превью Vimeo для всех слайдов и клонов
             const thumbCache = {};
