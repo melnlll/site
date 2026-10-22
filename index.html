@@ -132,7 +132,7 @@
             }
         }
 
-        /* Базовые слайды для мобильных устройств (крайние уходят за границы экрана) */
+        /* Базовые слайды для мобильных устройств */
         .carousel-slide {
             flex: 0 0 76%;
             width: 76%;
@@ -140,9 +140,9 @@
             transform: scale(0.90);
             transform-origin: center center;
             filter: brightness(0.4) saturate(0.7);
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                        opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                        filter 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                        filter 0.45s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.3s ease;
             cursor: pointer;
             user-select: none;
@@ -161,7 +161,7 @@
             }
         }
 
-        /* Компьютеры (от 1024px): центральная работа уменьшена ~20-25px для идеального баланса */
+        /* Компьютеры (от 1024px) */
         @media (min-width: 1024px) {
             .carousel-slide {
                 flex: 0 0 calc((100% - 48px) / 3);
@@ -259,7 +259,7 @@
             <!-- Video Portfolio Showcase -->
             <section id="portfolio" class="mb-16 sm:mb-24 scroll-mt-14 w-full pt-4">
                 
-                <!-- Плашка управления: выровнена слева по навигации, правый край стрелок аккуратно стоит над правым краем центральной плашки -->
+                <!-- Панель управления -->
                 <div id="showcase-controls" class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6 relative z-30 pointer-events-auto">
                     <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
@@ -276,7 +276,7 @@
                     </div>
                 </div>
                 
-                <!-- Окно карусели: опущено на 15px (mt-[15px]), исключено любое перекрытие элементов -->
+                <!-- Окно карусели -->
                 <div class="overflow-hidden relative w-full pt-8 pb-14 sm:pt-10 sm:pb-16 mt-[15px] z-10" id="carousel-viewport" style="touch-action: pan-y;">
                     <div class="carousel-track" id="carousel-track">
                         
@@ -669,8 +669,9 @@
             let currentDOMIndex = 2; // Реальный первый слайд
             let isTransitioning = false;
             let transitionTimeout = null;
+            let queuedDirection = 0;
 
-            // Выравнивание блока стрелок точно над правым краем центральной (активной) плашки
+            // Выравнивание блока стрелок точно вровень с правым краем центральной (активной) плашки
             function alignArrowsToActiveSlide() {
                 if (!arrowsContainer || !controlsBar || !viewport) return;
                 
@@ -680,7 +681,7 @@
                     return;
                 }
 
-                const activeSlide = allSlides[currentDOMIndex] || document.querySelector('.carousel-slide.active-slide');
+                const activeSlide = allSlides[currentDOMIndex] || originalSlides[0];
                 if (!activeSlide) return;
 
                 // Масштаб активной работы в зависимости от ширины экрана
@@ -691,18 +692,20 @@
                     scale = 1.03;
                 }
 
-                // Вычисляем точный правый край центрированной активной карточки
+                // Точный правый край центрированной активной карточки
                 const slideWidth = activeSlide.offsetWidth * scale;
                 const vpRect = viewport.getBoundingClientRect();
                 const vpCenter = vpRect.left + (vpRect.width / 2);
                 const targetSlideRight = vpCenter + (slideWidth / 2);
 
+                // Правый край контентной зоны панели управления (где стрелки стоят при marginRight = 0)
                 const controlsRect = controlsBar.getBoundingClientRect();
-                const diff = controlsRect.right - targetSlideRight;
+                const controlsStyle = window.getComputedStyle(controlsBar);
+                const paddingRight = parseFloat(controlsStyle.paddingRight) || 0;
+                const naturalRight = controlsRect.right - paddingRight;
 
-                // Сдвиг на 36px правее центрирует связку стрелок ровно над правым ребром/углом плашки видео
-                const offsetRight = 36;
-                const finalMargin = Math.max(0, Math.round(diff - offsetRight));
+                // Правый край стрелок устанавливается ровно вровень со всем правым краем плашки
+                const finalMargin = Math.max(0, Math.round(naturalRight - targetSlideRight));
 
                 arrowsContainer.style.marginRight = `${finalMargin}px`;
             }
@@ -713,14 +716,22 @@
 
             function moveTo(domIdx, smooth = true) {
                 if (smooth) {
-                    track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+                    allSlides.forEach(slide => {
+                        slide.style.transition = '';
+                    });
                     isTransitioning = true;
                     clearTimeout(transitionTimeout);
                     transitionTimeout = setTimeout(() => {
                         handleTransitionEnd();
-                    }, 520);
+                    }, 470);
                 } else {
+                    // При бесшовном цикле отключаем переходы у трека И у самих слайдов,
+                    // исключая сброс и повторную анимацию масштаба (scale bounce)
                     track.style.transition = 'none';
+                    allSlides.forEach(slide => {
+                        slide.style.transition = 'none';
+                    });
                     isTransitioning = false;
                 }
 
@@ -751,6 +762,19 @@
                 const slideCenter = targetSlide.offsetLeft + (targetSlide.offsetWidth / 2);
                 const targetTranslate = (viewportWidth / 2) - slideCenter;
                 track.style.transform = `translateX(${targetTranslate}px)`;
+
+                if (!smooth) {
+                    // Принудительный reflow для немедленного применения scale и translateX без анимаций
+                    void track.offsetHeight;
+                    // В следующем кадре восстанавливаем CSS transition для будущих плавных скроллов
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            allSlides.forEach(slide => {
+                                slide.style.transition = '';
+                            });
+                        });
+                    });
+                }
             }
 
             function handleTransitionEnd() {
@@ -760,6 +784,12 @@
                 } else if (currentDOMIndex >= N + 2) {
                     moveTo(currentDOMIndex - N, false);
                 }
+
+                if (queuedDirection !== 0) {
+                    const dir = queuedDirection;
+                    queuedDirection = 0;
+                    moveTo(currentDOMIndex + dir, true);
+                }
             }
 
             track.addEventListener("transitionend", (e) => {
@@ -768,25 +798,31 @@
                 handleTransitionEnd();
             });
 
-            // Кнопки навигации: поддержка быстрого переключения без задержек
+            // Кнопки навигации: поддержка быстрого переключения без срывов анимации
             prevBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (isTransitioning) handleTransitionEnd();
+                if (isTransitioning) {
+                    queuedDirection = -1;
+                    return;
+                }
                 moveTo(currentDOMIndex - 1, true);
             });
 
             nextBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (isTransitioning) handleTransitionEnd();
+                if (isTransitioning) {
+                    queuedDirection = 1;
+                    return;
+                }
                 moveTo(currentDOMIndex + 1, true);
             });
 
             dots.forEach(dot => {
                 dot.addEventListener("click", (e) => {
                     e.preventDefault();
-                    if (isTransitioning) handleTransitionEnd();
+                    if (isTransitioning) return;
                     const targetReal = parseInt(dot.getAttribute("data-index"));
                     moveTo(targetReal + 2, true);
                 });
@@ -799,7 +835,7 @@
                     if (idx !== currentDOMIndex) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (isTransitioning) handleTransitionEnd();
+                        if (isTransitioning) return;
                         moveTo(idx, true);
                     } else {
                         const card = e.target.closest(".video-card");
@@ -882,7 +918,7 @@
                 const diffY = touchStartY - e.changedTouches[0].clientY;
 
                 if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
-                    if (isTransitioning) handleTransitionEnd();
+                    if (isTransitioning) return;
                     if (diffX > 0) {
                         moveTo(currentDOMIndex + 1, true);
                     } else {
@@ -896,11 +932,11 @@
             document.addEventListener("keydown", (e) => {
                 if (lightbox.classList.contains("pointer-events-none")) {
                     if (e.key === "ArrowLeft") {
-                        if (isTransitioning) handleTransitionEnd();
+                        if (isTransitioning) return;
                         moveTo(currentDOMIndex - 1, true);
                     }
                     if (e.key === "ArrowRight") {
-                        if (isTransitioning) handleTransitionEnd();
+                        if (isTransitioning) return;
                         moveTo(currentDOMIndex + 1, true);
                     }
                 } else if (e.key === "Escape") {
