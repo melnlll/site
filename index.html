@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>MELNLLL // VFX, CGI & Video Editing</title>
+    <title>MELNLLL // Video Editing & Visual Effects</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -243,7 +243,7 @@
             <section class="min-h-[65vh] sm:min-h-[72vh] max-w-4xl mx-auto w-full flex flex-col justify-center items-center text-center py-8 select-none px-4 sm:px-8">
                 <div class="flex flex-col items-center">
                     <h1 class="text-[11px] min-[375px]:text-xs sm:text-sm md:text-base tracking-[0.22em] text-zinc-200 font-extrabold uppercase mb-5 sm:mb-6 drop-shadow-lg">
-                        [VISUAL EFFECTS] &bull; [3D CGI] &bull; [VIDEO EDITING]
+                        [VIDEO EDITING] &bull; [VISUAL EFFECTS]
                     </h1>
                     
                     <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-2xl mx-auto">
@@ -726,8 +726,6 @@
                         handleTransitionEnd();
                     }, 470);
                 } else {
-                    // При бесшовном цикле отключаем переходы у трека И у самих слайдов,
-                    // исключая сброс и повторную анимацию масштаба (scale bounce)
                     track.style.transition = 'none';
                     allSlides.forEach(slide => {
                         slide.style.transition = 'none';
@@ -764,9 +762,7 @@
                 track.style.transform = `translateX(${targetTranslate}px)`;
 
                 if (!smooth) {
-                    // Принудительный reflow для немедленного применения scale и translateX без анимаций
                     void track.offsetHeight;
-                    // В следующем кадре восстанавливаем CSS transition для будущих плавных скроллов
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
                             allSlides.forEach(slide => {
@@ -798,7 +794,7 @@
                 handleTransitionEnd();
             });
 
-            // Кнопки навигации: поддержка быстрого переключения без срывов анимации
+            // Кнопки навигации
             prevBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -828,10 +824,10 @@
                 });
             });
 
-            // Клик по слайдам: центрирование или открытие видео
+            // Клик по слайдам
             allSlides.forEach((slide, idx) => {
                 slide.addEventListener("click", (e) => {
-                    if (hasSwiped) return; // Игнорируем случайный тап при завершении свайпа
+                    if (hasSwiped) return;
                     if (idx !== currentDOMIndex) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -862,7 +858,7 @@
             moveTo(2, false);
             alignArrowsToActiveSlide();
 
-            // 3. Автоподгрузка HD превью Vimeo для всех слайдов и клонов
+            // 3. Автоподгрузка HD превью Vimeo
             const thumbCache = {};
             document.querySelectorAll(".video-card").forEach(async (card) => {
                 const videoId = card.getAttribute("data-video-id");
