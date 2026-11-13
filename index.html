@@ -196,6 +196,88 @@
             pointer-events: none;
         }
 
+        /* Интерактивное сравнение До / После */
+        .ba-compare {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            touch-action: pan-y;
+            cursor: ew-resize;
+        }
+
+        .ba-compare img {
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        .ba-before-layer {
+            clip-path: inset(0 50% 0 0);
+            -webkit-clip-path: inset(0 50% 0 0);
+            will-change: clip-path;
+        }
+
+        .ba-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 44px;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            cursor: ew-resize;
+        }
+
+        .ba-divider-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+            pointer-events: none;
+        }
+
+        .ba-handle {
+            position: relative;
+            z-index: 2;
+            width: 38px;
+            height: 38px;
+            border-radius: 9999px;
+            background: rgba(10, 10, 14, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.75);
+            transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        @media (hover: hover) {
+            .ba-divider:hover .ba-handle {
+                transform: scale(1.08);
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .ba-compare.is-dragging .ba-handle,
+        .ba-handle:focus-visible {
+            transform: scale(1.1);
+            border-color: #10B981;
+            outline: none;
+        }
+
         /* Кастомный скроллбар */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
@@ -263,7 +345,7 @@
                 <div id="showcase-controls" class="w-full max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex items-center justify-between mb-4 sm:mb-6 relative z-30 pointer-events-auto">
                     <div class="flex items-center gap-2 sm:gap-3">
                         <span class="text-[10px] sm:text-xs tracking-[0.25em] font-bold text-zinc-400 uppercase">// SELECTED SHOWCASE</span>
-                        <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 04</span>
+                        <span id="carousel-counter" class="text-[10px] sm:text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">01 / 05</span>
                     </div>
 
                     <div id="carousel-arrows-container" class="flex items-center gap-1.5 sm:gap-2 transition-[margin] duration-200 ease-out">
@@ -280,7 +362,106 @@
                 <div class="overflow-hidden relative w-full pt-8 pb-14 sm:pt-10 sm:pb-16 mt-[15px] z-10" id="carousel-viewport" style="touch-action: pan-y;">
                     <div class="carousel-track" id="carousel-track">
                         
-                        <!-- СЛАЙД 1: L'INSOUMISE -->
+                        <!-- СЛАЙД 1: WEDDING RECAP -->
+                        <div class="carousel-slide p-3 sm:p-5 glass-panel rounded-2xl sm:rounded-3xl">
+                            <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
+                                 data-video-id="1246492279" 
+                                 data-title="Wedding Recap" 
+                                 data-meta="Wedding Highlight &bull; Multicam Edit &amp; VFX &bull; 2026">
+                                
+                                <img src="https://vumbnail.com/1246492279_large.jpg" onerror="this.onerror=null;this.src='wed/after.png';" alt="Wedding Recap" class="vimeo-thumb absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                                <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
+                                    <span class="px-2.5 py-0.5 text-[9px] sm:text-[10px] font-mono uppercase bg-black/70 backdrop-blur-md text-emerald-400 border border-emerald-500/30 rounded-full tracking-wider">
+                                        // NEW WORK
+                                    </span>
+                                </div>
+
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-xl">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current translate-x-[1px]" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+
+                                <div class="project-compare hidden">
+                                    <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-black/80 backdrop-blur-xl border border-white/15 shadow-2xl">
+                                        <div class="flex items-center justify-between mb-2.5 px-1">
+                                            <span class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">// BEFORE &amp; AFTER COMPARISON</span>
+                                            <span class="text-[9px] sm:text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Drag slider</span>
+                                        </div>
+                                        <div class="ba-compare rounded-lg sm:rounded-xl border border-white/10 bg-zinc-950" data-initial="50">
+                                            <img src="wed/after.png" alt="Wedding Recap After" class="block w-full h-auto select-none pointer-events-none" draggable="false">
+                                            <img src="wed/before.png" alt="Wedding Recap Before" class="ba-before-layer absolute inset-0 w-full h-full object-cover select-none pointer-events-none" draggable="false">
+
+                                            <span class="ba-label-before absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 font-mono text-[9px] sm:text-[10px] tracking-widest text-zinc-200 uppercase pointer-events-none transition-opacity duration-150">BEFORE</span>
+                                            <span class="ba-label-after absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-emerald-500/30 font-mono text-[9px] sm:text-[10px] tracking-widest text-emerald-400 uppercase pointer-events-none transition-opacity duration-150">AFTER</span>
+
+                                            <div class="ba-divider">
+                                                <div class="ba-divider-line"></div>
+                                                <button type="button" class="ba-handle" role="slider" aria-label="Before and after comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                                                    <svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-3 3 3 3M16 9l3 3-3 3" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-desc hidden">
+                                    <div class="space-y-4 text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed">
+                                        <div class="flex flex-wrap items-center gap-1.5 pb-1">
+                                            <span class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 font-mono text-[10px] text-zinc-300 uppercase">WEDDING</span>
+                                            <span class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 font-mono text-[10px] text-zinc-300 uppercase">MULTICAM EDIT</span>
+                                        </div>
+
+                                        <p class="text-zinc-300/95 leading-normal">
+                                            A highlight recap of a wedding day. Documentation of the key moments. Shot on four cameras plus a drone.
+                                        </p>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
+                                            <div>
+                                                <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1">// MY ROLE</h5>
+                                                <p class="text-zinc-300">Editing, color, VFX, cleanup and sound design.</p>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1">// SKILLS SHOWN</h5>
+                                                <div class="flex flex-wrap gap-1 mt-1 font-mono text-[10px] text-zinc-300">
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Multicam Editing</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Color Grading</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Cleanup</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Tracking</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Sound Design</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="pt-3 border-t border-white/10">
+                                            <h5 class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase mb-1.5">// PIPELINE</h5>
+                                            <ul class="space-y-1 font-mono text-[11px] sm:text-xs text-zinc-400">
+                                                <li>&bull; <strong class="text-zinc-200">Footage:</strong> Sony FX30 (S-Log), 4 cameras + drone</li>
+                                                <li>&bull; <strong class="text-zinc-200">Edit and color:</strong> Premiere Pro</li>
+                                                <li>&bull; <strong class="text-zinc-200">Secondary Color:</strong> After Effects</li>
+                                                <li>&bull; <strong class="text-zinc-200">Cleanup:</strong> Photoshop clean plates, After Effects</li>
+                                                <li>&bull; <strong class="text-zinc-200">Tracking:</strong> Mocha Pro and manual tracking</li>
+                                                <li>&bull; <strong class="text-zinc-200">VFX:</strong> denoise/regrain, god rays, lens flares, rotoscoping</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-start mt-3 sm:mt-4">
+                                <div>
+                                    <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">Wedding Recap</h2>
+                                    <p class="text-xs text-zinc-400 font-mono mt-0.5">Wedding Highlight &bull; Multicam Edit &amp; VFX &bull; 2026</p>
+                                </div>
+                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">NEW</span>
+                            </div>
+                        </div>
+
+                        <!-- СЛАЙД 2: L'INSOUMISE -->
                         <div class="carousel-slide p-3 sm:p-5 glass-panel rounded-2xl sm:rounded-3xl">
                             <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1236726845" 
@@ -289,12 +470,6 @@
                                 
                                 <img src="Thumbnail.webp" alt="L'Insoumise Perfume Commercial" class="vimeo-thumb absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                                <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
-                                    <span class="px-2.5 py-0.5 text-[9px] sm:text-[10px] font-mono uppercase bg-black/70 backdrop-blur-md text-emerald-400 border border-emerald-500/30 rounded-full tracking-wider">
-                                        // NEW WORK
-                                    </span>
-                                </div>
 
                                 <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                                     <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center transform group-hover:scale-110 group-active:scale-95 transition-all duration-300 shadow-xl">
@@ -343,16 +518,13 @@
                                 </div>
                             </div>
                             
-                            <div class="flex justify-between items-start mt-3 sm:mt-4">
-                                <div>
-                                    <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">L'Insoumise: Perfume Commercial</h2>
-                                    <p class="text-xs text-zinc-400 font-mono mt-0.5">Concept Commercial &bull; AI-Assisted VFX &bull; 2026</p>
-                                </div>
-                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">NEW</span>
+                            <div class="mt-3 sm:mt-4">
+                                <h2 class="text-base sm:text-lg font-bold tracking-tight text-zinc-100">L'Insoumise: Perfume Commercial</h2>
+                                <p class="text-xs text-zinc-400 font-mono mt-0.5">Concept Commercial &bull; AI-Assisted VFX &bull; 2026</p>
                             </div>
                         </div>
 
-                        <!-- СЛАЙД 2: DART MOTORS (BREAKDOWN) -->
+                        <!-- СЛАЙД 3: DART MOTORS (BREAKDOWN) -->
                         <div class="carousel-slide p-3 sm:p-5 glass-panel rounded-2xl sm:rounded-3xl">
                             <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1238198666" 
@@ -419,7 +591,7 @@
                             </div>
                         </div>
 
-                        <!-- СЛАЙД 3: COMPOSITING REEL 2026 -->
+                        <!-- СЛАЙД 4: COMPOSITING REEL 2026 -->
                         <div class="carousel-slide p-3 sm:p-5 glass-panel rounded-2xl sm:rounded-3xl">
                             <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1218202467" 
@@ -453,7 +625,7 @@
                             </div>
                         </div>
 
-                        <!-- СЛАЙД 4: VFX REEL 2026 -->
+                        <!-- СЛАЙД 5: VFX REEL 2026 -->
                         <div class="carousel-slide p-3 sm:p-5 glass-panel rounded-2xl sm:rounded-3xl">
                             <div class="video-card aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 relative group cursor-pointer" 
                                  data-video-id="1122784946" 
@@ -496,6 +668,7 @@
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="1" aria-label="Slide 2"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="2" aria-label="Slide 3"></button>
                     <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="3" aria-label="Slide 4"></button>
+                    <button class="w-2 h-1 rounded-full bg-white/20 transition-all duration-300" data-index="4" aria-label="Slide 5"></button>
                 </div>
             </section>
 
@@ -548,6 +721,8 @@
         </button>
         
         <div id="lightbox-container" class="w-full max-w-4xl my-auto transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <div id="lightbox-compare" class="hidden mb-4"></div>
+
             <div class="aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl relative">
                 <iframe id="lightbox-iframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
@@ -575,6 +750,7 @@
             const mainContent = document.getElementById("main-content");
             const lightbox = document.getElementById("video-lightbox");
             const lightboxContainer = document.getElementById("lightbox-container");
+            const lightboxCompare = document.getElementById("lightbox-compare");
             const lightboxIframe = document.getElementById("lightbox-iframe");
             const lightboxTitle = document.getElementById("lightbox-title");
             const lightboxSubtitle = document.getElementById("lightbox-subtitle");
@@ -647,7 +823,7 @@
             const controlsBar = document.getElementById("showcase-controls");
 
             const originalSlides = Array.from(track.querySelectorAll(".carousel-slide"));
-            const N = originalSlides.length; // 4 работы
+            const N = originalSlides.length; // 5 работ
 
             // Создаем по 2 клона с каждой стороны для бесшовного цикла
             const cloneStart1 = originalSlides[N - 2].cloneNode(true);
@@ -946,9 +1122,20 @@
                 lightboxTitle.textContent = card.getAttribute("data-title");
                 lightboxSubtitle.innerHTML = card.getAttribute("data-meta");
 
+                const compareContent = card.querySelector(".project-compare");
+                if (compareContent && lightboxCompare) {
+                    lightboxCompare.innerHTML = compareContent.innerHTML;
+                    lightboxCompare.classList.remove("hidden");
+                    initCompareSliders(lightboxCompare);
+                } else if (lightboxCompare) {
+                    lightboxCompare.innerHTML = "";
+                    lightboxCompare.classList.add("hidden");
+                }
+
                 const descContent = card.querySelector(".project-desc");
                 lightboxDesc.innerHTML = descContent ? descContent.innerHTML : "";
 
+                lightbox.scrollTop = 0;
                 lightboxIframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0&badge=0&autopause=0&playsinline=1`;
                 document.body.style.overflow = 'hidden';
 
@@ -974,6 +1161,10 @@
                         vimeoPlayer.unload().catch(() => {});
                         vimeoPlayer = null;
                     }
+                    if (lightboxCompare) {
+                        lightboxCompare.innerHTML = "";
+                        lightboxCompare.classList.add("hidden");
+                    }
                     lightboxIframe.src = "";
                     document.body.style.overflow = '';
                 }, 200);
@@ -985,6 +1176,130 @@
                     closeLightbox();
                 }
             });
+
+            // 6.1 Интерактивный слайдер До / После
+            function initCompareSliders(root) {
+                if (!root) return;
+                root.querySelectorAll(".ba-compare").forEach((container) => {
+                    const beforeLayer = container.querySelector(".ba-before-layer");
+                    const divider = container.querySelector(".ba-divider");
+                    const handle = container.querySelector(".ba-handle");
+                    const labelBefore = container.querySelector(".ba-label-before");
+                    const labelAfter = container.querySelector(".ba-label-after");
+                    if (!beforeLayer || !divider || !handle) return;
+
+                    let currentPct = parseFloat(container.getAttribute("data-initial")) || 50;
+                    let isDragging = false;
+                    let isTouchTracking = false;
+                    let touchStartX = 0;
+                    let touchStartY = 0;
+                    let hasMoved = false;
+
+                    function applyPct(pct) {
+                        currentPct = Math.max(0, Math.min(100, pct));
+                        const rightInset = (100 - currentPct).toFixed(2) + "%";
+                        const leftPos = currentPct.toFixed(2) + "%";
+                        beforeLayer.style.clipPath = `inset(0 ${rightInset} 0 0)`;
+                        beforeLayer.style.webkitClipPath = `inset(0 ${rightInset} 0 0)`;
+                        divider.style.left = leftPos;
+                        handle.setAttribute("aria-valuenow", Math.round(currentPct));
+
+                        if (labelBefore) labelBefore.style.opacity = currentPct < 12 ? "0" : "1";
+                        if (labelAfter) labelAfter.style.opacity = currentPct > 88 ? "0" : "1";
+                    }
+
+                    function setFromClientX(clientX) {
+                        const rect = container.getBoundingClientRect();
+                        if (!rect.width) return;
+                        const pct = ((clientX - rect.left) / rect.width) * 100;
+                        applyPct(pct);
+                    }
+
+                    applyPct(currentPct);
+
+                    container.addEventListener("pointerdown", (e) => {
+                        if (e.button !== undefined && e.button !== 0 && e.pointerType === "mouse") return;
+                        const onHandle = divider.contains(e.target);
+
+                        if (e.pointerType === "touch" && !onHandle) {
+                            isTouchTracking = true;
+                            isDragging = false;
+                            hasMoved = false;
+                            touchStartX = e.clientX;
+                            touchStartY = e.clientY;
+                            return;
+                        }
+
+                        e.preventDefault();
+                        isDragging = true;
+                        hasMoved = false;
+                        container.classList.add("is-dragging");
+                        try { container.setPointerCapture(e.pointerId); } catch (_) {}
+                        if (!onHandle) {
+                            setFromClientX(e.clientX);
+                        }
+                    });
+
+                    container.addEventListener("pointermove", (e) => {
+                        if (isTouchTracking && !isDragging) {
+                            const dx = Math.abs(e.clientX - touchStartX);
+                            const dy = Math.abs(e.clientY - touchStartY);
+                            if (dx > 6 || dy > 6) {
+                                hasMoved = true;
+                                if (dx > dy) {
+                                    isDragging = true;
+                                    isTouchTracking = false;
+                                    container.classList.add("is-dragging");
+                                    try { container.setPointerCapture(e.pointerId); } catch (_) {}
+                                } else {
+                                    isTouchTracking = false;
+                                    return;
+                                }
+                            }
+                        }
+
+                        if (!isDragging) return;
+                        hasMoved = true;
+                        setFromClientX(e.clientX);
+                    });
+
+                    function stopDragging(e) {
+                        if (isTouchTracking && !isDragging && !hasMoved && e.type === "pointerup") {
+                            setFromClientX(e.clientX);
+                        }
+                        isTouchTracking = false;
+                        if (isDragging) {
+                            isDragging = false;
+                            container.classList.remove("is-dragging");
+                            try {
+                                if (container.hasPointerCapture(e.pointerId)) {
+                                    container.releasePointerCapture(e.pointerId);
+                                }
+                            } catch (_) {}
+                        }
+                    }
+
+                    container.addEventListener("pointerup", stopDragging);
+                    container.addEventListener("pointercancel", stopDragging);
+
+                    handle.addEventListener("keydown", (e) => {
+                        const step = e.shiftKey ? 10 : 2;
+                        if (e.key === "ArrowLeft") {
+                            e.preventDefault();
+                            applyPct(currentPct - step);
+                        } else if (e.key === "ArrowRight") {
+                            e.preventDefault();
+                            applyPct(currentPct + step);
+                        } else if (e.key === "Home") {
+                            e.preventDefault();
+                            applyPct(0);
+                        } else if (e.key === "End") {
+                            e.preventDefault();
+                            applyPct(100);
+                        }
+                    });
+                });
+            }
 
             // 7. Копирование контактов
             document.querySelectorAll(".copy-trigger").forEach(trigger => {
