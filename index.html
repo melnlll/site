@@ -369,7 +369,7 @@
                                  data-title="Wedding Recap" 
                                  data-meta="Wedding Highlight &bull; Multicam Edit &amp; VFX &bull; 2026">
                                 
-                                <img src="https://vumbnail.com/1246492279_large.jpg" onerror="this.onerror=null;this.src='wed/after.png';" alt="Wedding Recap" class="vimeo-thumb absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out">
+                                <img src="https://vumbnail.com/1246492279_large.jpg" onerror="this.onerror=null;this.src='wed/after.webp';" alt="Wedding Recap" class="vimeo-thumb absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
                                 <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
@@ -386,13 +386,13 @@
 
                                 <div class="project-compare hidden">
                                     <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-black/80 backdrop-blur-xl border border-white/15 shadow-2xl">
-                                        <div class="flex items-center justify-between mb-2.5 px-1">
+                                        <div class="flex items-center justify-between gap-2 mb-2.5 px-1">
                                             <span class="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">// BEFORE &amp; AFTER COMPARISON</span>
-                                            <span class="text-[9px] sm:text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Drag slider</span>
+                                            <span class="text-[9px] sm:text-[10px] font-mono text-zinc-500 uppercase tracking-wider whitespace-nowrap">Drag slider</span>
                                         </div>
                                         <div class="ba-compare rounded-lg sm:rounded-xl border border-white/10 bg-zinc-950" data-initial="50">
-                                            <img src="wed/after.png" alt="Wedding Recap After" class="block w-full h-auto select-none pointer-events-none" draggable="false">
-                                            <img src="wed/before.png" alt="Wedding Recap Before" class="ba-before-layer absolute inset-0 w-full h-full object-cover select-none pointer-events-none" draggable="false">
+                                            <img src="wed/after.webp" alt="Wedding Recap After" class="block w-full h-auto select-none pointer-events-none" draggable="false">
+                                            <img src="wed/before.webp" alt="Wedding Recap Before" class="ba-before-layer absolute inset-0 w-full h-full object-cover select-none pointer-events-none" draggable="false">
 
                                             <span class="ba-label-before absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 font-mono text-[9px] sm:text-[10px] tracking-widest text-zinc-200 uppercase pointer-events-none transition-opacity duration-150">BEFORE</span>
                                             <span class="ba-label-after absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-emerald-500/30 font-mono text-[9px] sm:text-[10px] tracking-widest text-emerald-400 uppercase pointer-events-none transition-opacity duration-150">AFTER</span>
@@ -711,11 +711,11 @@
     </div>
 
     <!-- Lightbox -->
-    <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-300 ease-out py-6 sm:py-10 px-3 sm:px-6 flex justify-center items-start">
+    <div id="video-lightbox" class="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-300 ease-out pt-[calc(env(safe-area-inset-top)+4.25rem)] pb-[calc(env(safe-area-inset-bottom)+1.5rem)] sm:pt-16 sm:pb-10 px-3 sm:px-6 flex justify-center items-start">
         
-        <button id="close-lightbox" aria-label="Close Lightbox" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 transition-colors p-2 z-50">
+        <button id="close-lightbox" aria-label="Close Lightbox" class="fixed top-[calc(env(safe-area-inset-top)+0.75rem)] right-3 sm:top-5 sm:right-6 text-white/70 hover:text-white font-mono text-xs tracking-widest uppercase flex items-center gap-2 transition-colors p-1.5 sm:p-2 z-50">
             <span class="hidden min-[420px]:inline">[ CLOSE ]</span>
-            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-black/50 hover:bg-white hover:text-black active:scale-95 transition-all">
+            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-black/70 backdrop-blur-md hover:bg-white hover:text-black active:scale-95 transition-all">
                 <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"/></svg>
             </span>
         </button>
